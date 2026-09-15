@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마주봄 · 2분 피치</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#0f1117;--surface:#1a1d27;--surface-2:#22262f;--border:#2e3340;
+  --text-1:#f0f1f4;--text-2:#a0a4b0;--text-3:#6b7080;
+  --accent:#5b8af5;--accent-soft:rgba(91,138,245,.12);
+  --green:#34d399;--green-soft:rgba(52,211,153,.12);
+  --blue:#60a5fa;--rose:#fb7185;--rose-soft:rgba(251,113,133,.12);
+  --orange:#fbbf24;--orange-soft:rgba(251,191,36,.12);
+  --purple:#a78bfa;--purple-soft:rgba(167,139,250,.12);
+  --ease:cubic-bezier(.25,.1,.25,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Malgun Gothic',sans-serif;background:var(--bg);color:var(--text-1);-webkit-font-smoothing:antialiased;word-break:keep-all}
+.deck{position:relative;width:100%;height:100%}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 80px;opacity:0;transform:translateX(40px);transition:opacity 400ms var(--ease),transform 400ms var(--ease);pointer-events:none;overflow:hidden}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.slide.prev{opacity:0;transform:translateX(-40px)}
+.slide-inner{max-width:1180px;width:100%}
+.s-label{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.s-title{font-size:50px;font-weight:900;letter-spacing:-.03em;line-height:1.15;margin-bottom:14px}
+.s-sub{font-size:21px;color:var(--text-2);line-height:1.6}
+.highlight-box{background:var(--rose-soft);border:1px solid rgba(251,113,133,.3);border-radius:16px;padding:18px 28px;text-align:center;font-size:22px;font-weight:700;color:var(--rose)}
+
+/* ── 하단 컨트롤 ── */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(15,17,23,.92);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:20px;height:48px;padding:0 24px;transition:opacity .3s}
+.nav-bar.hidden{opacity:0;pointer-events:none}
+.nav-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text-2);font-size:16px;font-weight:700;padding:7px 18px;border-radius:8px;cursor:pointer}
+.nav-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.slide-counter{font-size:15px;color:var(--text-3);font-weight:600;min-width:70px;text-align:center;font-variant-numeric:tabular-nums}
+.hint{font-size:13px;color:var(--text-3);margin-left:12px}
+
+/* ── 발표 타이머 (T 키) ── */
+#timer{position:fixed;top:14px;right:18px;z-index:200;font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;padding:6px 14px;border-radius:10px;background:rgba(15,17,23,.75);border:1px solid var(--border);color:var(--text-2);display:none}
+#timer.on{display:block}
+#timer.warn{color:var(--orange);border-color:var(--orange)}
+#timer.over{color:var(--rose);border-color:var(--rose)}
+
+
+/* ── 슬라이드 2: 기존 제품 시간축 ── */
+.tl2{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 22px;padding-top:16px}
+.tl2-axis{position:absolute;left:6%;right:6%;top:24px;height:3px;background:linear-gradient(90deg,var(--rose),var(--rose) 45%,var(--orange) 70%,var(--purple));border-radius:2px;opacity:.7}
+.tl2-col{position:relative;text-align:center;padding:30px 14px 18px;border-radius:14px;background:var(--surface-2);border:1px solid var(--border)}
+.tl2-dot{position:absolute;top:-1px;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border-radius:50%;background:var(--c);border:3px solid var(--bg)}
+.tl2-when{font-size:28px;font-weight:900;color:var(--c);line-height:1.15;letter-spacing:-.02em}
+.tl2-who{font-size:17px;color:var(--text-1);font-weight:800;margin-top:10px;line-height:1.35}
+.tl2-who span{font-size:13.5px;color:var(--text-3);font-weight:600}
+.tl2-num{display:inline-block;margin-top:10px;font-size:14px;font-weight:800;color:var(--c);background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:4px 12px}
+.tl2-note{font-size:15px;color:var(--text-2);margin-top:10px;line-height:1.4}
+.tl2-note b{color:var(--text-1)}
+.big-stat{display:flex;align-items:center;gap:26px;background:var(--rose-soft);border:1px solid rgba(251,113,133,.35);border-radius:16px;padding:16px 30px}
+.big-num{font-size:72px;font-weight:900;color:var(--rose);line-height:1;letter-spacing:-.04em}
+.big-txt{font-size:22px;color:var(--text-1);line-height:1.4;font-weight:600}
+.big-txt b{color:var(--rose)}
+.big-txt span{font-size:14px;color:var(--text-3);font-weight:500}
+
+/* ── 슬라이드 3: 마주봄 하루 ── */
+.day{display:flex;align-items:stretch;gap:10px;margin:26px 0 22px}
+.day-step{flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:18px 14px;text-align:center}
+.day-step.ours{background:var(--accent-soft);border-color:var(--accent)}
+.day-ico{font-size:40px;line-height:1}
+.day-t{font-size:15px;font-weight:800;color:var(--text-3);letter-spacing:.08em;margin-top:8px}
+.day-d{font-size:19px;color:var(--text-2);margin-top:6px;line-height:1.4}
+.day-d b{color:var(--text-1)}
+.day-arr{display:flex;align-items:center;color:var(--text-3);font-size:30px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:22px;margin-bottom:18px}
+.vs-box{border-radius:16px;padding:18px 26px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.vs-box.old{background:var(--surface-2);border:1px solid var(--border)}
+.vs-box.new{background:var(--accent-soft);border:1px solid var(--accent)}
+.vs-l{font-size:15px;font-weight:800;color:var(--text-3);width:100%}
+.vs-n{font-size:56px;font-weight:900;line-height:1;letter-spacing:-.03em}
+.vs-n span{font-size:22px;font-weight:800;margin-left:4px}
+.vs-box.old .vs-n{color:var(--orange)}.vs-box.new .vs-n{color:var(--accent)}
+.vs-d{font-size:17px;color:var(--text-2)}
+.vs-mid{font-size:26px;font-weight:900;color:var(--text-3)}
+.tags{display:flex;gap:10px;flex-wrap:wrap}
+.tags span{font-size:16px;font-weight:700;color:var(--green);background:var(--green-soft);border:1px solid rgba(52,211,153,.3);border-radius:100px;padding:7px 16px}
+.tags span b{color:var(--text-1)}
+
+/* ── 영상 ── */
+.video-box{position:relative;text-align:center}
+.video-box video{display:block;margin:0 auto;max-width:100%;max-height:70vh;border-radius:14px;border:1px solid var(--border);background:#000}
+.video-cap{margin-top:14px;font-size:17px;color:var(--text-3)}
+.video-cap b{color:var(--text-2)}
+
+@media (max-width:1000px){
+  .slide{padding:32px 20px}.s-title{font-size:34px}
+  .map-wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="timer">0:00</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══ 1 · 훅 ═══ -->
+<div class="slide active" data-slide="1">
+  <div class="slide-inner" style="text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:calc(100vh - 120px)">
+    <div style="display:inline-block;padding:6px 16px;border-radius:100px;font-size:15px;font-weight:700;margin-bottom:34px;background:var(--accent-soft);color:var(--accent);letter-spacing:.04em">마주봄 &middot; 비접촉 낙상 예측</div>
+    <h1 style="font-size:54px;font-weight:900;letter-spacing:-.03em;line-height:1.3;max-width:980px;margin:0 auto 18px">
+      치매 어르신은 넘어져서가 아니라,<br>
+      넘어진 뒤 <span style="color:var(--rose)">누워 지내다</span> 돌아가십니다.
+    </h1>
+    <p style="font-size:30px;font-weight:800;color:var(--text-2);margin-bottom:46px">그래서 <span style="color:var(--text-3);text-decoration:line-through">감지</span>가 아니라 <span style="color:var(--accent)">예측</span>이어야 합니다.</p>
+    <div style="display:flex;align-items:center;gap:18px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 34px">
+      <span style="font-size:58px;font-weight:900;letter-spacing:-.03em;color:var(--rose);line-height:1">10명 중 4명</span>
+      <span style="text-align:left;font-size:18px;color:var(--text-2);line-height:1.5">치매 어르신이 <b style="color:var(--text-1)">매년</b> 한 번 이상 넘어집니다<br><span style="font-size:14px;color:var(--text-3)">연간 낙상률 43.6%</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 2 · 기존 제품: 전부 벌어진 뒤 ═══ -->
+<div class="slide" data-slide="2">
+  <div class="slide-inner" style="max-width:1240px">
+    <div class="s-label" style="color:var(--rose)">기존 제품 &middot; 상용 6종 조사</div>
+    <h2 class="s-title" style="font-size:48px">지금 나와 있는 제품은 전부,<br><span style="color:var(--rose)">일이 벌어진 뒤</span>에 압니다.</h2>
+
+    <div class="tl2">
+      <div class="tl2-axis"></div>
+      <div class="tl2-col" style="--c:var(--rose)">
+        <div class="tl2-dot"></div>
+        <div class="tl2-when">넘어진 뒤</div>
+        <div class="tl2-who">레이더 감지기<br><span>Vayyar &middot; Milesight &middot; HiFCare</span></div>
+        <div class="tl2-num">감지 92.5~99%</div>
+        <div class="tl2-note">잘 잡습니다. 넘어진 <b>다음에</b>.</div>
+      </div>
+      <div class="tl2-col" style="--c:var(--rose)">
+        <div class="tl2-dot"></div>
+        <div class="tl2-when">나온 뒤</div>
+        <div class="tl2-who">압력 매트<br><span>침대·바닥 센서</span></div>
+        <div class="tl2-num">사후 감지</div>
+        <div class="tl2-note">밟아야 울립니다.</div>
+      </div>
+      <div class="tl2-col" style="--c:var(--orange)">
+        <div class="tl2-dot"></div>
+        <div class="tl2-when">30~65초 전</div>
+        <div class="tl2-who">VSTAlert<br><span>적외선 + AI</span></div>
+        <div class="tl2-num">가장 빠른 제품</div>
+        <div class="tl2-note">이탈 직전만. 보행 분석 없음.</div>
+      </div>
+      <div class="tl2-col" style="--c:var(--purple)">
+        <div class="tl2-dot"></div>
+        <div class="tl2-when">착용해야 안다</div>
+        <div class="tl2-who">CarePredict<br><span>손목 밴드</span></div>
+        <div class="tl2-num">착용 필수</div>
+        <div class="tl2-note">치매 어르신은 벗어버립니다.</div>
+      </div>
+    </div>
+
+    <div class="big-stat">
+      <span class="big-num">0<span style="font-size:.5em">개</span></span>
+      <span class="big-txt">보행을 분석해 <b>그날 위험을 몇 시간 전에</b> 올리는 비접촉 제품<br><span>조사 6종 기준 &middot; 수치는 각 사 발표</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3 · 마주봄: 그날 낮에 이미 안다 ═══ -->
+<div class="slide" data-slide="3">
+  <div class="slide-inner" style="max-width:1240px">
+    <div class="s-label" style="color:var(--accent)">마주봄</div>
+    <h2 class="s-title" style="font-size:48px">마주봄은 <span style="color:var(--accent)">그날 낮에</span> 이미 압니다.</h2>
+
+    <div class="day">
+      <div class="day-step"><div class="day-ico">&#9728;&#65039;</div><div class="day-t">낮</div><div class="day-d">걸음이 평소보다<br><b>불안정</b></div></div>
+      <div class="day-arr">&rarr;</div>
+      <div class="day-step"><div class="day-ico">&#127751;</div><div class="day-t">저녁</div><div class="day-d">오늘 밤 이탈 위험<br><b style="color:var(--orange)">미리 올림</b></div></div>
+      <div class="day-arr">&rarr;</div>
+      <div class="day-step"><div class="day-ico">&#127769;</div><div class="day-t">밤</div><div class="day-d">걸터앉고 일어나려는<br><b style="color:var(--rose)">전조</b></div></div>
+      <div class="day-arr">&rarr;</div>
+      <div class="day-step ours"><div class="day-ico">&#128241;</div><div class="day-t">알림</div><div class="day-d">나오기 <b>전에</b><br>간호사 도착</div></div>
+    </div>
+
+    <div class="vs">
+      <div class="vs-box old"><div class="vs-l">기존 최선</div><div class="vs-n">60<span>초 전</span></div><div class="vs-d">이탈 직전 한 순간</div></div>
+      <div class="vs-mid">vs</div>
+      <div class="vs-box new"><div class="vs-l">마주봄</div><div class="vs-n">수 시간<span> 전</span></div><div class="vs-d">낮 걸음으로 그날 위험 + 밤 전조</div></div>
+    </div>
+
+    <div class="tags">
+      <span>비접촉</span><span>카메라 없음</span><span>착용 없음</span><span>남이 아니라 <b>그 어르신의 평소</b>와 비교</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 4 · 시스템 개념도 (기존 덱 그대로) ═══ -->
+<div class="slide" data-slide="4">
+  <div class="slide-inner" style="max-width:1280px">
+    <div class="s-label" style="color:var(--accent)">어떻게 압니까</div>
+    <h2 class="s-title" style="font-size:34px;margin-bottom:4px">센서 두 개가 다른 신호를 읽고, 그 어르신의 <span style="color:var(--accent)">평소</span>와 비교합니다</h2>
+    <p class="s-sub" style="margin-bottom:0;font-size:18px">병실 환경부터 센서·디바이스·알고리즘·간호사 알림까지 한 흐름으로</p>
+
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-top:14px;">
+      <div style="flex:1.95;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#e0708a;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">1</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">요양병원 병실 환경</span></div>
+        <div style="background:var(--rose-soft);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:2px auto 10px;padding:4px;width:100%;"><img src="sensor3d.png?v=2" alt="병실 3D 배치도" style="width:100%;height:auto;display:block;max-height:185px;object-fit:contain;"></div>
+        <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>침상 주변 치매환자 모니터링</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>침상 이탈·낙상위험 상황 대상</span></div></div>
+      </div>
+      <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
+      <div style="flex:1.55;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;"><div style="width:30px;height:30px;border-radius:50%;background:#34d399;color:#0f1117;font-size:16px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">2</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">비접촉 센서</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--green-soft);border-left:3px solid var(--green);border-radius:10px;padding:10px 12px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><svg width="21" height="21" viewBox="0 0 40 40" fill="none" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"><circle cx="20" cy="27" r="2.6" fill="#34d399" stroke="none"/><path d="M11 25 A12 12 0 0 1 29 25" opacity=".45"/><path d="M15 27 A7 7 0 0 1 25 27" opacity=".85"/></svg><span style="font-size:14.5px;font-weight:800;color:var(--green);">mmWave 레이더</span></div>
+            <img src="mmwave_photo.jpg?v=2" alt="mmWave 실물" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(52,211,153,.35);margin-bottom:6px;">
+            <div style="font-size:12.5px;color:var(--text-2);line-height:1.65;">&bull; 위치·움직임 감지<br>&bull; 보행 속도·변동성 &rarr; <b style="color:var(--text-1)">낮의 걸음</b></div>
+          </div>
+          <div style="background:var(--orange-soft);border-left:3px solid var(--orange);border-radius:10px;padding:10px 12px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><svg width="21" height="21" viewBox="0 0 40 40" fill="none" stroke="#fbbf24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="8" width="10" height="6" rx="1.5"/><path d="M18 14 L12 30 M22 14 L28 30 M14 30 H26" opacity=".85"/></svg><span style="font-size:14.5px;font-weight:800;color:var(--orange);">ToF 센서</span></div>
+            <img src="tof_photo.jpg?v=2" alt="ToF 실물" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(251,191,36,.35);margin-bottom:6px;">
+            <div style="font-size:12.5px;color:var(--text-2);line-height:1.65;">&bull; 자세 형태 인식 (눕&rarr;앉음)<br>&bull; 침대 가장자리 접근 &rarr; <b style="color:var(--text-1)">밤의 전조</b></div>
+          </div>
+        </div>
+      </div>
+      <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
+      <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#5b8af5;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">3</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">센서 디바이스 (Pi&nbsp;5)</span></div>
+        <img src="pi_photo.jpg?v=1" alt="Pi 5 실물" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(91,138,245,.35);margin:2px 0 10px;">
+        <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>두 센서 수신·시간 동기화</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>전처리 — 노이즈 제거·z-score</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>병실 안에서 처리 끝</span></div></div>
+      </div>
+      <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
+      <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#a78bfa;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">4</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">위험도 인식 알고리즘</span></div>
+        <img src="algo_photo.jpg?v=1" alt="실측 특징 공간" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
+        <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>개인 베이스라인 대비 z-score</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>"평소보다 얼마나 다른가"</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span><span style="color:var(--green);font-weight:700;">정상</span> / <span style="color:var(--orange);font-weight:700;">주의</span> / <span style="color:var(--purple);font-weight:700;">경고</span> / <span style="color:var(--rose);font-weight:700;">위험</span></span></div></div>
+      </div>
+      <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
+      <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#60a5fa;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">5</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">간호사 알림</span></div>
+        <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" style="width:100%;height:70px;object-fit:cover;object-position:top;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
+        <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>대시보드 실시간 상태</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>전조 감지 시 <b style="color:var(--text-1)">즉시 폰 알림</b></span></div></div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:16px;color:var(--text-2);"><span style="font-size:18px">&#9728;&#65039;</span> <b style="color:var(--text-1)">낮</b> &mdash; 걸음이 평소보다 불안정하면 <b style="color:var(--orange)">그날 밤 이탈 위험을 미리 올립니다</b></div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:16px;color:var(--text-2);"><span style="font-size:18px">&#127769;</span> <b style="color:var(--text-1)">밤</b> &mdash; 걸터앉고 일어나려는 <b style="color:var(--rose)">전조</b>에서 간호사에게 알립니다</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 5 · 시연영상 ═══ -->
+<div class="slide" data-slide="5">
+  <div class="slide-inner" style="max-width:1240px">
+    <div class="s-label" style="color:var(--green)">실제 시연 &middot; 40초</div>
+    <h2 class="s-title" style="font-size:36px;margin-bottom:14px">낮의 걸음으로 미리 알고, 밤에 나오기 전에 곁에</h2>
+    <div class="video-box">
+      <video id="demoVideo" muted playsinline controls preload="auto"
+             style="display:block;margin:0 auto;max-width:100%;max-height:68vh;border-radius:14px;border:1px solid var(--border);background:#000">
+        <source src="demo.mp4" type="video/mp4">
+      </video>
+      <div class="video-cap"><b>Enter</b> 또는 클릭으로 재생 &middot; 무음 &middot; 발표자가 설명합니다 &nbsp;<span style="opacity:.6">(demo.mp4 없으면 scenario.mp4로 대체)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 6 · 마무리 ═══ -->
+<div class="slide" data-slide="6">
+  <div class="slide-inner" style="display:flex;align-items:center;justify-content:center;gap:60px;min-height:calc(100vh - 120px)">
+    <svg width="300" height="300" viewBox="0 0 320 320" style="border-radius:24px;box-shadow:0 16px 48px rgba(0,0,0,.35);flex-shrink:0;">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#141824"/><stop offset="58%" stop-color="#1b2130"/><stop offset="100%" stop-color="#232b3d"/></linearGradient>
+        <radialGradient id="glow" cx="50%" cy="66%" r="42%"><stop offset="0%" stop-color="#e6a84a" stop-opacity=".55"/><stop offset="55%" stop-color="#e6a84a" stop-opacity=".12"/><stop offset="100%" stop-color="#e6a84a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="320" height="320" fill="url(#sky)"/>
+      <circle cx="160" cy="212" r="120" fill="url(#glow)"/>
+      <circle cx="160" cy="212" r="34" fill="#e6a84a" opacity=".9"/>
+      <line x1="26" y1="212" x2="294" y2="212" stroke="#5b6b86" stroke-opacity=".5"/>
+      <line x1="26" y1="238" x2="294" y2="238" stroke="#5b6b86" stroke-opacity=".25"/>
+      <text x="160" y="300" text-anchor="middle" fill="#9aa4ba" font-size="13.2" letter-spacing="3" font-family="sans-serif">EVERY MORNING, BEFORE THE FALL</text>
+    </svg>
+    <div style="text-align:left;">
+      <p style="font-size:30px;color:var(--text-2);line-height:1.6;margin-bottom:26px;font-weight:600">저희 마주봄은,<br>넘어진 <strong style="color:var(--text-1);">뒤</strong>에 달려가는 게 아니라<br><strong style="color:var(--accent);">침대에서 나오기 전에</strong> 곁에 있겠습니다.</p>
+      <h2 style="font-size:60px;font-weight:900;letter-spacing:-.03em;margin-bottom:16px;background:linear-gradient(135deg,var(--text-1) 40%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">감사합니다</h2>
+      <div style="width:50px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:26px;opacity:.5;"></div>
+      <div style="font-size:16px;color:var(--text-3);opacity:.8;"><span style="font-weight:700;color:var(--accent);letter-spacing:.04em;">Team MajuBom</span><span style="margin:0 10px;color:var(--border);">&middot;</span><span>박형석, 조우진, 김도경, 유현기, 김민혁</span></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<nav class="nav-bar" id="nav">
+  <button class="nav-btn" id="prevBtn" onclick="go(-1)">&larr; 이전</button>
+  <div class="slide-counter" id="counter">1 / 6</div>
+  <button class="nav-btn" id="nextBtn" onclick="go(1)">다음 &rarr;</button>
+  <span class="hint">F 전체화면 &middot; T 타이머 &middot; H 컨트롤 숨김 &middot; Enter 영상</span>
+</nav>
+
+<script>
+(function(){
+  var slides=document.querySelectorAll('.slide'),total=slides.length,cur=0;
+  var vid=document.getElementById('demoVideo');
+
+  /* demo.mp4 없으면 scenario.mp4로 대체 */
+  vid.addEventListener('error',function(){
+    if(vid.dataset.fb) return; vid.dataset.fb='1';
+    vid.innerHTML='<source src="scenario.mp4" type="video/mp4">'; vid.load();
+  },true);
+
+  function show(n){
+    slides.forEach(function(s,i){s.classList.remove('active','prev');if(i===n)s.classList.add('active');else if(i<n)s.classList.add('prev');});
+    if(!slides[n].contains(vid)){vid.pause();} else {vid.currentTime=0;}
+    document.getElementById('counter').textContent=(n+1)+' / '+total;
+    document.getElementById('prevBtn').style.opacity=n===0?'.3':'1';
+    document.getElementById('nextBtn').style.opacity=n===total-1?'.3':'1';
+    history.replaceState(null,'','#'+(n+1));
+  }
+  window.go=function(d){var nx=cur+d;if(nx<0||nx>=total)return;cur=nx;show(cur);};
+
+  /* 타이머: T 시작/정지, Shift+T 리셋. 2:00 넘으면 주황, 2:30 넘으면 빨강 */
+  var tEl=document.getElementById('timer'),t0=null,tAcc=0,tInt=null;
+  function fmt(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}
+  function tick(){var ms=tAcc+(t0?Date.now()-t0:0);tEl.textContent=fmt(ms);tEl.classList.toggle('warn',ms>=120000&&ms<150000);tEl.classList.toggle('over',ms>=150000);}
+  function toggleTimer(){tEl.classList.add('on');if(t0){tAcc+=Date.now()-t0;t0=null;clearInterval(tInt);tick();}else{t0=Date.now();tInt=setInterval(tick,250);}}
+  function resetTimer(){t0=null;tAcc=0;clearInterval(tInt);tick();}
+
+  document.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowRight'||k===' '||k==='PageDown'){e.preventDefault();go(1);}
+    else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(-1);}
+    else if(k==='Home'){cur=0;show(cur);}
+    else if(k==='End'){cur=total-1;show(cur);}
+    else if(k==='Enter'){ if(slides[cur].contains(vid)){ e.preventDefault(); vid.paused?vid.play().catch(function(){}):vid.pause(); } }
+    else if(k==='f'||k==='F'){ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){}); }
+    else if(k==='t'){ toggleTimer(); }
+    else if(k==='T'){ resetTimer(); }
+    else if(k==='h'||k==='H'){ document.getElementById('nav').classList.toggle('hidden'); }
+  });
+
+  var tx=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;});
+  document.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){d<0?go(1):go(-1);}});
+
+  var h=parseInt(location.hash.replace('#',''),10);cur=(h>=1&&h<=total)?h-1:0;show(cur);
+})();
+</script>
+</body>
+</html>
