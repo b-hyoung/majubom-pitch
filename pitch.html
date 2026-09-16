@@ -34,13 +34,19 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 /* ── 하단 컨트롤 ── */
 .nav-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(15,17,23,.92);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:20px;height:48px;padding:0 24px;transition:opacity .3s}
 .nav-bar.hidden{opacity:0;pointer-events:none}
+.nav-close{position:absolute;right:16px;padding:6px 11px;font-size:14px}
+#navTab{position:fixed;right:16px;bottom:0;z-index:101;background:rgba(15,17,23,.7);border:1px solid var(--border);border-bottom:none;color:var(--text-3);font-size:12px;padding:3px 12px;border-radius:6px 6px 0 0;cursor:pointer;display:none}
+#navTab.on{display:block}
 .nav-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text-2);font-size:16px;font-weight:700;padding:7px 18px;border-radius:8px;cursor:pointer}
 .nav-btn:hover{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .slide-counter{font-size:15px;color:var(--text-3);font-weight:600;min-width:70px;text-align:center;font-variant-numeric:tabular-nums}
 .hint{font-size:13px;color:var(--text-3);margin-left:12px}
 
-#timer{position:fixed;top:14px;right:18px;z-index:200;font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;padding:6px 14px;border-radius:10px;background:rgba(15,17,23,.75);border:1px solid var(--border);color:var(--text-2);display:none}
-#timer.on{display:block}
+#timer{position:fixed;top:14px;right:18px;z-index:200;font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;padding:4px 6px 4px 14px;border-radius:10px;background:rgba(15,17,23,.75);border:1px solid var(--border);color:var(--text-2);display:none;align-items:center;gap:8px}
+#timer.on{display:flex}
+#timer .tm{cursor:pointer;min-width:58px}
+#timer button{background:transparent;border:1px solid var(--border);color:var(--text-3);font-size:13px;font-weight:700;padding:3px 8px;border-radius:6px;cursor:pointer;line-height:1}
+#timer button:hover{color:var(--text-1);border-color:var(--text-3)}
 #timer.warn{color:var(--warn);border-color:var(--warn)}
 #timer.over{color:var(--danger);border-color:var(--danger)}
 
@@ -130,14 +136,14 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .notify-source a{color:inherit;text-underline-offset:3px}
 
 /* ── 슬라이드 6: 시스템 구성도 ── */
-.sysflow{display:flex;align-items:stretch;gap:8px;margin:10px 0}
-.sysflow-step{flex:1 1 0;min-width:0;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 12px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:220px}
-.sysflow-step .sf-photo{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;background:var(--bg);border-radius:9px;border:1px solid var(--border);margin-bottom:12px;cursor:zoom-in}
-.sysflow-step .sf-photo-pair{display:flex;gap:4px;width:100%;aspect-ratio:16/10;margin-bottom:12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.sysflow{display:flex;align-items:stretch;gap:12px;margin:14px 0}
+.sysflow-step{flex:1 1 0;min-width:0;background:var(--surface-2);border:1px solid var(--border);border-radius:16px;padding:16px 14px 22px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.sysflow-step .sf-photo{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;background:var(--bg);border-radius:10px;border:1px solid var(--border);margin-bottom:16px;cursor:zoom-in}
+.sysflow-step .sf-photo-pair{display:flex;gap:4px;width:100%;aspect-ratio:16/10;margin-bottom:16px;background:var(--bg);border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .sysflow-step .sf-photo-pair img{flex:1;min-width:0;width:50%;height:100%;object-fit:contain;cursor:zoom-in}
-.sysflow-step .sf-title{font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:6px}
-.sysflow-step .sf-desc{font-size:12px;color:var(--text-3);line-height:1.5}
-.sysflow-arrow{align-self:center;color:var(--text-3);font-size:20px;flex:0 0 auto}
+.sysflow-step .sf-title{font-size:24px;font-weight:900;color:var(--text-1);margin-bottom:8px}
+.sysflow-step .sf-desc{font-size:17px;color:var(--text-2);line-height:1.5}
+.sysflow-arrow{align-self:center;color:var(--text-3);font-size:34px;flex:0 0 auto}
 
 /* ── 센서 상세: 측정 방식 · 감지 항목 카드 ── */
 .spec-card{position:relative;background:var(--surface-2);border:1px solid var(--border);border-radius:20px;padding:30px 32px}
@@ -214,7 +220,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 </head>
 <body>
 
-<div id="timer">0:00</div>
+<div id="timer"><span class="tm" id="timerVal" title="클릭: 시작/정지">0:00</span><button type="button" onclick="resetTimer()" title="초기화 (Shift+T)">&#8635;</button><button type="button" onclick="hideTimer()" title="숨기기 (t)">&#10005;</button></div>
 
 <div class="deck" id="deck">
 
@@ -269,9 +275,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 <!-- ═══ 3 · 센싱 방식 &amp; 시스템 구성도 ═══ -->
 <div class="slide" data-slide="3">
-  <div class="slide-inner" style="max-width:1260px">
-    <div class="s-eyebrow">센싱 방식 · 시스템 구성</div>
-    <h2 class="s-title">센서의 역할과 시스템 구성도</h2>
+  <div class="slide-inner" style="max-width:1720px">
+    <h2 class="s-title" style="margin-bottom:10px">시스템 구성도</h2>
     <div class="sysflow">
       <div class="sysflow-step">
         <img src="sensor3d.png?v=3" alt="병실 센서 배치" class="sf-photo zoomable" onclick="openLB(0)">
@@ -306,7 +311,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
         <div class="sf-desc">실시간 확인<br>알림·기록</div>
       </div>
     </div>
-    <p style="text-align:center;font-size:13.5px;color:var(--text-3);margin-top:12px">영상 저장 없음 · 모든 처리는 병실 안 게이트웨이에서 종료</p>
+    <p style="text-align:center;font-size:18px;color:var(--text-2);margin-top:18px;font-weight:600">영상 저장 없음 · 모든 처리는 병실 안 게이트웨이에서 종료</p>
   </div>
 </div>
 
@@ -320,10 +325,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <!-- ═══ 3-1 · mmWave 레이더 (측정 방식 + 감지 항목) ═══ -->
 <div class="slide" data-slide="3-1">
   <div class="slide-inner" style="max-width:1080px">
+    <div class="s-eyebrow">mmWave 레이더</div>
     <div class="spec-card spec-card-wide">
       <img src="mmwave_photo.jpg?v=1" alt="mmWave 레이더 실물" class="spec-photo-lg zoomable" onclick="openLB(1)">
       <div class="spec-body">
-        <h3 class="spec-sensor-name">mmWave 레이더</h3>
+        <h3 class="spec-sensor-name">걸음 · 위치</h3>
         <span class="spec-pill">측정 방식</span>
         <div class="spec-headline">전파 송출 → 반사파의 도플러 · 위상 분석</div>
         <div class="spec-sub">움직임과 미세 진동을 접촉 없이 계산</div>
@@ -344,10 +350,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <!-- ═══ 3-2 · ToF 센서 (측정 방식 + 감지 항목) ═══ -->
 <div class="slide" data-slide="3-2">
   <div class="slide-inner" style="max-width:1080px">
+    <div class="s-eyebrow">ToF 거리 센서</div>
     <div class="spec-card spec-card-wide">
       <img src="tof_photo.jpg?v=1" alt="ToF 센서 실물" class="spec-photo-lg zoomable" onclick="openLB(2)">
       <div class="spec-body">
-        <h3 class="spec-sensor-name">ToF 거리 센서</h3>
+        <h3 class="spec-sensor-name">자세 · 이탈 전조</h3>
         <span class="spec-pill">측정 방식</span>
         <div class="spec-headline">적외선 발사 → 반사 도달 시간(ToF)으로 거리</div>
         <div class="spec-sub">±1mm 정밀 · 8×8 다존으로 자세 형태까지</div>
@@ -368,10 +375,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <!-- ═══ 3-3 · 게이트웨이(Pi 5) ═══ -->
 <div class="slide" data-slide="3-3">
   <div class="slide-inner" style="max-width:1080px">
+    <div class="s-eyebrow">게이트웨이 · Raspberry Pi 5</div>
     <div class="spec-card spec-card-wide">
       <img src="pi_photo.jpg?v=1" alt="게이트웨이(Raspberry Pi 5) 실물" class="spec-photo-lg zoomable" onclick="openLB(4)">
       <div class="spec-body">
-        <h3 class="spec-sensor-name">게이트웨이 · Raspberry Pi 5</h3>
+        <h3 class="spec-sensor-name">수신 · 동기화 · 전처리</h3>
         <span class="spec-pill">역할</span>
         <div class="spec-headline">센서 2종의 데이터를 병실 안에서 바로 처리</div>
         <div class="spec-sub">ToF·mmWave 두 스트림을 한 곳에서 받아 알고리즘에 넘길 준비까지 끝냄</div>
@@ -421,10 +429,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <!-- ═══ 4-1 · 대시보드 ═══ -->
 <div class="slide" data-slide="4-1">
   <div class="slide-inner" style="max-width:1080px">
+    <div class="s-eyebrow">대시보드</div>
     <div class="spec-card spec-card-wide">
       <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" class="spec-photo-lg zoomable" onclick="openLB(5)">
       <div class="spec-body">
-        <h3 class="spec-sensor-name">대시보드</h3>
+        <h3 class="spec-sensor-name">간호사 화면</h3>
         <span class="spec-pill">실시간 확인</span>
         <div class="spec-headline">간호사가 보는 화면 — 위치·자세·위험도 한눈에</div>
         <div class="spec-sub">병실 평면도 위에 실제 좌표를 그대로 띄우는 실측 화면</div>
@@ -446,7 +455,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <div class="slide" data-slide="5">
   <div class="slide-inner">
     <div class="s-eyebrow">알림</div>
-    <h2 class="s-title">누가, 무엇을 받는가</h2>
+    <h2 class="s-title">알림 &middot; 리포트</h2>
     <div class="notify-screens">
       <article class="notify-screen">
         <h3>간호사<span>실시간 위험 알림</span></h3>
@@ -468,7 +477,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <div class="slide demo-slide" data-slide="7">
   <div class="slide-inner">
     <div class="demo-heading">
-      <h2 class="s-title">기상부터 침대 이탈까지</h2>
+      <h2 class="s-title">시연영상</h2>
       <p>Enter 재생·일시정지 · F 전체화면</p>
     </div>
     <div class="video-box">
@@ -538,8 +547,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   <button class="nav-btn" id="prevBtn" onclick="go(-1)">&larr; 이전</button>
   <div class="slide-counter" id="counter">1 / 12</div>
   <button class="nav-btn" id="nextBtn" onclick="go(1)">다음 &rarr;</button>
-  <span class="hint">F 전체화면 &middot; T 타이머 &middot; H 컨트롤 숨김 &middot; Enter 영상</span>
+  <span class="hint">F 전체화면 &middot; t 타이머 &middot; H 컨트롤 &middot; Enter 영상</span>
+  <button class="nav-btn nav-close" onclick="toggleNav()" title="컨트롤 숨기기 (H)">&#10005;</button>
 </nav>
+<button id="navTab" onclick="toggleNav()" title="컨트롤 보이기 (H)">&#9650;</button>
 
 <script>
 (function(){
@@ -566,9 +577,13 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
   var tEl=document.getElementById('timer'),t0=null,tAcc=0,tInt=null;
   function fmt(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+':'+('0'+s%60).slice(-2);}
-  function tick(){var ms=tAcc+(t0?Date.now()-t0:0);tEl.textContent=fmt(ms);tEl.classList.toggle('warn',ms>=120000&&ms<150000);tEl.classList.toggle('over',ms>=150000);}
+  window.toggleNav=function(){var n=document.getElementById('nav'),t=document.getElementById('navTab');n.classList.toggle('hidden');t.classList.toggle('on',n.classList.contains('hidden'));};
+  var tVal=document.getElementById('timerVal');
+  function tick(){var ms=tAcc+(t0?Date.now()-t0:0);tVal.textContent=fmt(ms);tEl.classList.toggle('warn',ms>=120000&&ms<150000);tEl.classList.toggle('over',ms>=150000);}
   function toggleTimer(){tEl.classList.add('on');if(t0){tAcc+=Date.now()-t0;t0=null;clearInterval(tInt);tick();}else{t0=Date.now();tInt=setInterval(tick,250);}}
-  function resetTimer(){t0=null;tAcc=0;clearInterval(tInt);tick();}
+  window.resetTimer=function(){t0=null;tAcc=0;clearInterval(tInt);tick();};
+  window.hideTimer=function(){if(t0){tAcc+=Date.now()-t0;t0=null;clearInterval(tInt);}tEl.classList.remove('on');};
+  tVal.addEventListener('click',toggleTimer);
 
   document.addEventListener('keydown',function(e){
     var k=e.key;
@@ -580,7 +595,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     else if(k==='f'||k==='F'){ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){}); }
     else if(k==='t'){ toggleTimer(); }
     else if(k==='T'){ resetTimer(); }
-    else if(k==='h'||k==='H'){ document.getElementById('nav').classList.toggle('hidden'); }
+    else if(k==='h'||k==='H'){ toggleNav(); }
   });
 
   var tx=0;
