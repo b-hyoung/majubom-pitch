@@ -80,6 +80,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .compare-cell .compare-caution{font-size:17px;color:#f4a9b5;font-weight:700;margin-top:12px}
 .compare-note{font-size:13px;line-height:1.5;color:#b3bac9;margin-top:14px}
 .compare-note a{color:inherit}
+.compare-emphasis-existing{color:#edb98a;font-weight:800}
+.compare-emphasis-current{color:#a9c3ff;font-weight:900}
 .compare-list{margin:0;padding-left:23px;display:grid;gap:10px;color:#d6deed;font-size:19px;line-height:1.4}
 .compare-list li::marker{color:#a9c3ff}
 @media(max-height:760px){.compare-cell{padding:22px 26px}.compare-cell h3{font-size:30px;margin-bottom:13px}.compare-cell p{font-size:19px;line-height:1.5}.compare-heads{margin-top:16px}.compare-grid{row-gap:18px}}
@@ -118,6 +120,14 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .notify-tag.now{background:var(--danger-soft);color:var(--danger)}
 .notify-tag.later{background:var(--accent-soft);color:var(--accent)}
 .notify-tag.none{background:var(--surface);color:var(--text-3)}
+.notify-screens{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:16px}
+.notify-screen h3{font-size:24px;line-height:1.3;margin-bottom:12px}
+.notify-screen h3 span{font-size:15px;font-weight:600;color:#a9c3ff;margin-left:12px}
+.notify-screen img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border:1px solid var(--border);border-radius:10px;cursor:zoom-in;background:#fafaf9}
+.notify-screen p{font-size:17px;line-height:1.5;color:#ccd0da;margin-top:12px}
+.notify-footer{margin-top:16px;font-size:15px;color:var(--text-2)}
+.notify-source{font-size:12px;color:var(--text-2);line-height:1.5;margin-top:10px}
+.notify-source a{color:inherit;text-underline-offset:3px}
 
 /* ── 슬라이드 6: 시스템 구성도 ── */
 .sysflow{display:flex;align-items:stretch;gap:8px;margin:10px 0}
@@ -234,22 +244,22 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     <div class="compare-grid">
       <article class="compare-cell">
         <div class="compare-label">접촉식 · CarePredict Tempo</div>
-        <h3>벗으면 관찰도 중단</h3>
-        <p>손목밴드로 식사·활동 패턴 확인<br>지속적인 착용 필요</p>
+        <h3>낯선 걸 손목에 차는 것부터가 스트레스</h3>
+        <p>손목밴드로 식사·활동 패턴 확인<br><strong class="compare-emphasis-existing">벗어버리면 관찰도 끊김</strong></p>
       </article>
       <article class="compare-cell ours">
         <div class="compare-label">비접촉식</div>
-        <h3>어르신의 일상 그대로</h3>
+        <h3><span class="compare-emphasis-current">어르신의 일상 그대로</span></h3>
         <p>착용·조작 불필요<br>평소 행동과 생활 습관 유지</p>
       </article>
       <article class="compare-cell">
         <div class="compare-label">단일 감지 방식 · VirtuSense VSTAlert</div>
-        <h3>침상 이탈 움직임에 알림</h3>
-        <p>적외선으로 이탈 의도 감지<br>담당 간호사에게 사전 알림</p>
+        <h3>일어나는 <span class="compare-emphasis-existing">그 순간만</span> 봅니다</h3>
+        <p>적외선으로 이탈 의도 감지<br>그 전 하루의 걸음·평소 상태는 판단에 없음</p>
       </article>
       <article class="compare-cell ours">
         <div class="compare-label">다중센서 방식</div>
-        <h3>보행 상태와 이탈 움직임을 함께 판단</h3>
+        <h3><span class="compare-emphasis-current">보행 상태</span>와 <span class="compare-emphasis-current">이탈 움직임</span>을 함께 판단</h3>
         <p>평소 대비 보행 변화 확인<br>침상 이탈 움직임과 연계</p>
       </article>
     </div>
@@ -261,7 +271,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <div class="slide" data-slide="3">
   <div class="slide-inner" style="max-width:1260px">
     <div class="s-eyebrow">센싱 방식 · 시스템 구성</div>
-    <h2 class="s-title">센서 2개에서 대시보드까지, 한 장의 흐름</h2>
+    <h2 class="s-title">센서의 역할과 시스템 구성도</h2>
     <div class="sysflow">
       <div class="sysflow-step">
         <img src="sensor3d.png?v=3" alt="병실 센서 배치" class="sf-photo zoomable" onclick="openLB(0)">
@@ -297,7 +307,6 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
       </div>
     </div>
     <p style="text-align:center;font-size:13.5px;color:var(--text-3);margin-top:12px">영상 저장 없음 · 모든 처리는 병실 안 게이트웨이에서 종료</p>
-    <p class="cue-line" style="text-align:center">다음 화면부터 — 각 센서가 정확히 뭘, 어떻게 측정·감지하는지</p>
   </div>
 </div>
 
@@ -438,26 +447,20 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   <div class="slide-inner">
     <div class="s-eyebrow">알림</div>
     <h2 class="s-title">누가, 무엇을 받는가</h2>
-    <div class="notify-row">
-      <div class="notify-card on">
-        <div class="notify-ico">👩‍⚕️</div>
-        <div class="notify-who">간호사</div>
-        <div class="notify-what">전조 감지 즉시 폰 알림 + 대시보드로 위치·상태 확인 후 바로 이동</div>
-        <span class="notify-tag now">실시간</span>
-      </div>
-      <div class="notify-card">
-        <div class="notify-ico">👨‍👩‍👧</div>
-        <div class="notify-who">보호자</div>
-        <div class="notify-what">AI가 정리한 주간 · 누적 리포트를 나중에 확인 — 매 순간 불안하지 않게</div>
-        <span class="notify-tag later">사후 리포트</span>
-      </div>
-      <div class="notify-card">
-        <div class="notify-ico">🧑‍🦳</div>
-        <div class="notify-who">환자 본인</div>
-        <div class="notify-what">모니터링 대상 — 잠든 어르신을 깨우는 별도 알림은 없습니다</div>
-        <span class="notify-tag none">알림 없음</span>
-      </div>
+    <div class="notify-screens">
+      <article class="notify-screen">
+        <h3>간호사<span>실시간 위험 알림</span></h3>
+        <img src="notification-nurse.png" alt="간호사 대시보드 UI 예시: 위험 신호 알림과 ToF 자세·mmWave 보행 상태. 테스트 데이터 화면." onclick="openLB(6)">
+        <p>위험 알림 확인<br>센서 상태를 보고 현장 대응</p>
+      </article>
+      <article class="notify-screen">
+        <h3>보호자<span>공유 리포트 예시</span></h3>
+        <img src="guardian-report.png" alt="보호자용 주간 안부 리포트 디자인 예시: 이전보다 걸음이 느려지고 몸의 흔들림이 늘어 간호사에게 이동 도움 필요 여부를 확인하는 내용. 합성 데이터." onclick="openLB(7)">
+        <p>주간 보행 변화와 관찰 내용 확인<br>누적 기록을 통한 경과 파악</p>
+      </article>
     </div>
+    <p class="notify-footer">환자 본인 · 잠든 어르신을 깨우는 별도 알림 없음</p>
+    <p class="notify-source">간호사: <a href="https://github.com/b-hyoung/Majubom/blob/main/site/index.html" target="_blank" rel="noopener noreferrer">기존 대시보드</a> · 보호자: 주간 안부 UI 디자인 예시 · 테스트·합성 데이터 사용 · 클릭하여 확대</p>
   </div>
 </div>
 
@@ -512,7 +515,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     {src:'tof_photo.jpg?v=1', cap:'ToF 센서 실물 — 자세 형태·가장자리 접근'},
     {src:'algo_photo.jpg?v=1', cap:'위험도 인식 알고리즘 — 실측 866프레임 특징 공간'},
     {src:'pi_photo.jpg?v=1', cap:'게이트웨이 실물 — Raspberry Pi 5'},
-    {src:'dashboard_photo.jpg?v=1', cap:'대시보드 실제 화면 — 평면도·센서 상태'}
+    {src:'dashboard_photo.jpg?v=1', cap:'대시보드 실제 화면 — 평면도·센서 상태'},
+    {src:'notification-nurse.png', cap:'간호사 대시보드 UI — 저장소 테스트 데이터로 재현한 화면'},
+    {src:'guardian-report.png', cap:'보호자용 주간 안부 — 합성 데이터 기반 UI 디자인 예시'}
   ];
   var lb=document.getElementById('lb'), img=document.getElementById('lbImg'), cap=document.getElementById('lbCap');
   var idx=0;
