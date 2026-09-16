@@ -91,6 +91,23 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .video-cap{margin-top:14px;font-size:17px;color:var(--text-3)}
 .video-cap b{color:var(--text-2)}
 
+/* ── 라이트박스 (이미지 확대·슬라이드) — piuda 덱 그대로 ── */
+#lb{position:fixed;inset:0;z-index:99999;background:rgba(8,10,15,0.96);display:none;align-items:center;justify-content:center;}
+#lb.open{display:flex;}
+#lb img{max-width:92vw;max-height:82vh;border-radius:14px;box-shadow:0 24px 70px rgba(0,0,0,.55);transition:opacity 250ms var(--ease);}
+#lb img.fade{opacity:0;}
+#lb .lb-cap{position:absolute;bottom:6.5vh;left:0;right:0;text-align:center;color:#e8eaf0;font-size:17px;font-weight:600;padding:0 20px;}
+#lb .lb-close{position:absolute;top:24px;right:34px;font-size:38px;color:#cfd3dd;cursor:pointer;line-height:1;background:none;border:none;}
+#lb .lb-close:hover{color:#fff;}
+#lb .lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:34px;color:#fff;cursor:pointer;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;user-select:none;transition:background 150ms;}
+#lb .lb-nav:hover{background:rgba(255,255,255,.18);}
+#lb .lb-prev{left:3vw;} #lb .lb-next{right:3vw;}
+#lb .lb-dots{position:absolute;bottom:3vh;left:0;right:0;display:flex;gap:9px;justify-content:center;}
+#lb .lb-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.28);}
+#lb .lb-dot.on{background:var(--accent);}
+.zoomable{cursor:zoom-in;transition:filter 150ms;}
+.zoomable:hover{filter:brightness(1.06);}
+
 @media (max-width:1000px){
   .slide{padding:32px 20px}.s-title{font-size:34px}
   .map-wrap{grid-template-columns:1fr}
@@ -202,7 +219,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     <div style="display:flex;align-items:flex-start;gap:10px;margin-top:14px;">
       <div style="flex:1.95;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#e0708a;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">1</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">요양병원 병실 환경</span></div>
-        <div style="background:var(--rose-soft);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:2px auto 10px;padding:4px;width:100%;"><img src="sensor3d.png?v=2" alt="병실 3D 배치도" style="width:100%;height:auto;display:block;max-height:185px;object-fit:contain;"></div>
+        <div style="background:var(--rose-soft);border-radius:12px;display:flex;align-items:center;justify-content:center;margin:2px auto 10px;padding:4px;width:100%;"><img src="sensor3d.png?v=2" alt="병실 3D 배치도" class="zoomable" onclick="openLB(0)" style="width:100%;height:auto;display:block;max-height:185px;object-fit:contain;"></div>
         <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>침상 주변 치매환자 모니터링</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>침상 이탈·낙상위험 상황 대상</span></div></div>
       </div>
       <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
@@ -211,12 +228,12 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="background:var(--green-soft);border-left:3px solid var(--green);border-radius:10px;padding:10px 12px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><svg width="21" height="21" viewBox="0 0 40 40" fill="none" stroke="#34d399" stroke-width="2.6" stroke-linecap="round"><circle cx="20" cy="27" r="2.6" fill="#34d399" stroke="none"/><path d="M11 25 A12 12 0 0 1 29 25" opacity=".45"/><path d="M15 27 A7 7 0 0 1 25 27" opacity=".85"/></svg><span style="font-size:14.5px;font-weight:800;color:var(--green);">mmWave 레이더</span></div>
-            <img src="mmwave_photo.jpg?v=2" alt="mmWave 실물" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(52,211,153,.35);margin-bottom:6px;">
+            <img src="mmwave_photo.jpg?v=2" alt="mmWave 실물" class="zoomable" onclick="openLB(1)" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(52,211,153,.35);margin-bottom:6px;">
             <div style="font-size:12.5px;color:var(--text-2);line-height:1.65;">&bull; 위치·움직임 감지<br>&bull; 보행 속도·변동성 &rarr; <b style="color:var(--text-1)">낮의 걸음</b></div>
           </div>
           <div style="background:var(--orange-soft);border-left:3px solid var(--orange);border-radius:10px;padding:10px 12px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><svg width="21" height="21" viewBox="0 0 40 40" fill="none" stroke="#fbbf24" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="15" y="8" width="10" height="6" rx="1.5"/><path d="M18 14 L12 30 M22 14 L28 30 M14 30 H26" opacity=".85"/></svg><span style="font-size:14.5px;font-weight:800;color:var(--orange);">ToF 센서</span></div>
-            <img src="tof_photo.jpg?v=2" alt="ToF 실물" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(251,191,36,.35);margin-bottom:6px;">
+            <img src="tof_photo.jpg?v=2" alt="ToF 실물" class="zoomable" onclick="openLB(2)" style="width:100%;height:62px;object-fit:cover;border-radius:9px;border:1px solid rgba(251,191,36,.35);margin-bottom:6px;">
             <div style="font-size:12.5px;color:var(--text-2);line-height:1.65;">&bull; 자세 형태 인식 (눕&rarr;앉음)<br>&bull; 침대 가장자리 접근 &rarr; <b style="color:var(--text-1)">밤의 전조</b></div>
           </div>
         </div>
@@ -224,19 +241,19 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
       <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
       <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#5b8af5;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">3</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">센서 디바이스 (Pi&nbsp;5)</span></div>
-        <img src="pi_photo.jpg?v=1" alt="Pi 5 실물" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(91,138,245,.35);margin:2px 0 10px;">
+        <img src="pi_photo.jpg?v=1" alt="Pi 5 실물" class="zoomable" onclick="openLB(3)" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(91,138,245,.35);margin:2px 0 10px;">
         <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>두 센서 수신·시간 동기화</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>전처리 — 노이즈 제거·z-score</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>병실 안에서 처리 끝</span></div></div>
       </div>
       <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
       <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#a78bfa;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">4</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">위험도 인식 알고리즘</span></div>
-        <img src="algo_photo.jpg?v=1" alt="실측 특징 공간" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
+        <img src="algo_photo.jpg?v=1" alt="실측 특징 공간" class="zoomable" onclick="openLB(4)" style="width:100%;height:70px;object-fit:cover;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
         <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>개인 베이스라인 대비 z-score</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>"평소보다 얼마나 다른가"</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span><span style="color:var(--green);font-weight:700;">정상</span> / <span style="color:var(--orange);font-weight:700;">주의</span> / <span style="color:var(--purple);font-weight:700;">경고</span> / <span style="color:var(--rose);font-weight:700;">위험</span></span></div></div>
       </div>
       <div style="align-self:center;color:var(--text-3);font-size:22px;flex:0 0 auto;">&rarr;</div>
       <div style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:18px 17px;display:flex;flex-direction:column;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:30px;height:30px;border-radius:50%;background:#60a5fa;color:#0f1117;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex:0 0 auto;">5</div><span style="font-size:15.5px;font-weight:800;color:var(--text-1);line-height:1.25;">간호사 알림</span></div>
-        <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" style="width:100%;height:70px;object-fit:cover;object-position:top;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
+        <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" class="zoomable" onclick="openLB(5)" style="width:100%;height:70px;object-fit:cover;object-position:top;border-radius:9px;border:1px solid rgba(167,139,250,.35);margin:2px 0 10px;">
         <div style="font-size:13.5px;color:var(--text-2);line-height:1.55;display:flex;flex-direction:column;gap:3px;"><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>대시보드 실시간 상태</span></div><div style="display:flex;gap:5px;"><span style="color:var(--text-3);">&bull;</span><span>전조 감지 시 <b style="color:var(--text-1)">즉시 폰 알림</b></span></div></div>
       </div>
     </div>
@@ -289,6 +306,50 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 </div><!-- /deck -->
 
+<!-- 라이트박스 (piuda 덱 그대로) -->
+<div id="lb">
+  <button class="lb-close" onclick="closeLB()">&times;</button>
+  <div class="lb-nav lb-prev" onclick="navLB(-1)">&#8249;</div>
+  <img id="lbImg" src="" alt="확대 이미지">
+  <div class="lb-nav lb-next" onclick="navLB(1)">&#8250;</div>
+  <div class="lb-cap" id="lbCap"></div>
+  <div class="lb-dots" id="lbDots"></div>
+</div>
+<script>
+(function(){
+  var GAL=[
+    {src:'sensor3d.png?v=2', cap:'센서 3D 배치 — 요양병원 단독실 (mmWave 폴 · ToF 머리맡/발치)'},
+    {src:'sensor_mmwave.png?v=7', cap:'mmWave 레이더 — IWR6843AOP · 위치·보행·심박·호흡'},
+    {src:'sensor_tof.png?v=6', cap:'ToF 센서 — VL53L5CX · 자세 형태·가장자리 접근'},
+    {src:'sensor_pi.png?v=6', cap:'센서 디바이스 — Raspberry Pi 5 · 수신·동기화·전처리·저장·전송'},
+    {src:'sensor_algo.png?v=1', cap:'위험도 인식 알고리즘 — 실측 866프레임 특징 공간 · z-score'},
+    {src:'sensor_dashboard.png?v=1', cap:'관리자 대시보드 — 평면도·종합판정·센서 상태·알림'}
+  ];
+  var idx=0;
+  var lb=document.getElementById('lb'), img=document.getElementById('lbImg'),
+      cap=document.getElementById('lbCap'), dots=document.getElementById('lbDots');
+  GAL.forEach(function(g){ var i=new Image(); i.src=g.src; }); /* 미리 로드 → 넘길 때 끊김 없음 */
+  function render(){
+    img.classList.add('fade');
+    setTimeout(function(){
+      img.src=GAL[idx].src; cap.textContent=GAL[idx].cap;
+      dots.innerHTML=GAL.map(function(g,i){return '<span class="lb-dot'+(i===idx?' on':'')+'"></span>';}).join('');
+      img.onload=function(){ img.classList.remove('fade'); };
+      if(img.complete) img.classList.remove('fade');
+    }, lb.classList.contains('open')?120:0);
+  }
+  window.lbCount=GAL.length;
+  window.lbIndex=function(){ return idx; };
+  window.lbIsOpen=function(){ return lb.classList.contains('open'); };
+  window.openLB=function(i){ idx=i||0; lb.classList.add('open'); render(); };
+  window.closeLB=function(){ lb.classList.remove('open'); };
+  window.navLB=function(d){ idx=(idx+d+GAL.length)%GAL.length; render(); };
+  lb.addEventListener('click',function(e){ if(e.target===lb) closeLB(); });
+  document.addEventListener('keydown',function(e){ if(lb.classList.contains('open')&&e.key==='Escape') closeLB(); });
+})();
+</script>
+
+
 <nav class="nav-bar" id="nav">
   <button class="nav-btn" id="prevBtn" onclick="go(-1)">&larr; 이전</button>
   <div class="slide-counter" id="counter">1 / 6</div>
@@ -308,6 +369,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   },true);
 
   function show(n){
+    if(window.closeLB) closeLB();
     slides.forEach(function(s,i){s.classList.remove('active','prev');if(i===n)s.classList.add('active');else if(i<n)s.classList.add('prev');});
     if(!slides[n].contains(vid)){vid.pause();} else {vid.currentTime=0;}
     document.getElementById('counter').textContent=(n+1)+' / '+total;
@@ -315,7 +377,23 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     document.getElementById('nextBtn').style.opacity=n===total-1?'.3':'1';
     history.replaceState(null,'','#'+(n+1));
   }
-  window.go=function(d){var nx=cur+d;if(nx<0||nx>=total)return;cur=nx;show(cur);};
+  /* 슬라이드 4(개념도): 넘기기 누르면 자세히보기 사진 1번부터 순서대로, 마지막 다음에 5번 슬라이드 */
+  var GAL_SLIDE=3;
+  window.go=function(d){
+    if(cur===GAL_SLIDE){
+      if(!lbIsOpen()){ if(d>0){openLB(0);updateCounter();return;} }
+      else{
+        var i=lbIndex();
+        if(d>0){ if(i<lbCount-1){navLB(1);updateCounter();return;} closeLB(); }
+        else{ if(i>0){navLB(-1);updateCounter();return;} closeLB();updateCounter();return; }
+      }
+    }
+    var nx=cur+d;if(nx<0||nx>=total)return;cur=nx;show(cur);
+  };
+  function updateCounter(){
+    var c=document.getElementById('counter');
+    c.textContent=(cur+1)+' / '+total+(cur===GAL_SLIDE&&lbIsOpen()?' · 사진 '+(lbIndex()+1)+'/'+lbCount:'');
+  }
 
   /* 타이머: T 시작/정지, Shift+T 리셋. 2:00 넘으면 주황, 2:30 넘으면 빨강 */
   var tEl=document.getElementById('timer'),t0=null,tAcc=0,tInt=null;
