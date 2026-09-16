@@ -44,24 +44,46 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 #timer.warn{color:var(--warn);border-color:var(--warn)}
 #timer.over{color:var(--danger);border-color:var(--danger)}
 
-/* ── 슬라이드 2: 문제 → 개선 ── */
-.fix-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-bottom:14px}
-.fix-card{border-radius:16px;padding:18px 22px;background:var(--surface-2);border:1px solid var(--border)}
-.fix-card .fix-label{font-size:12.5px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.fix-card .fix-problem{font-size:19px;font-weight:800;color:var(--danger);margin-bottom:4px}
-.fix-card .fix-desc{font-size:14px;color:var(--text-2)}
-.fix-arrow{font-size:22px;color:var(--text-3)}
-.fix-solution{border-radius:16px;padding:18px 22px;background:var(--ok-soft);border:1px solid rgba(52,211,153,.35)}
-.fix-solution .fix-label{font-size:12.5px;font-weight:800;color:var(--ok);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.fix-solution .fix-headline{font-size:19px;font-weight:900;color:var(--text-1)}
-.evidence-line{margin-top:18px;display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 22px;font-size:15px;color:var(--text-2)}
-.evidence-line b{color:var(--accent);font-size:22px;font-weight:900}
-.competitor-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
-.comp-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 12px;text-align:center}
-.comp-when{font-size:14px;font-weight:900;color:var(--danger);margin-bottom:6px}
-.comp-name{font-size:12.5px;font-weight:700;color:var(--text-1);line-height:1.4}
-.comp-name span{display:block;font-size:10.5px;font-weight:500;color:var(--text-3);margin-top:2px}
-.comp-note{font-size:11px;color:var(--text-3);margin-top:6px;line-height:1.4}
+/* ── 슬라이드 2: 접촉성 × 센서 구성 2×2 ── */
+.matrix-wrap{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:stretch}
+.matrix-y{display:grid;grid-template-rows:1fr 1fr;gap:10px;padding-top:33px;padding-bottom:29px}
+.matrix-y span{display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:11px;font-weight:800;letter-spacing:.04em;writing-mode:vertical-rl;transform:rotate(180deg)}
+.matrix-y span:last-child{color:var(--accent)}
+.matrix-main{min-width:0}.matrix-colheads{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:9px}
+.matrix-colhead{font-size:13px;font-weight:800;text-align:center;color:var(--text-3);letter-spacing:.02em}.matrix-colhead:last-child{color:var(--accent)}
+.matrix-board{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;min-height:286px}
+.matrix-cell{position:relative;display:flex;flex-direction:column;padding:16px 19px;background:var(--surface);border:1px solid var(--border);border-radius:15px;overflow:hidden}
+.matrix-cell .matrix-tag{display:inline-block;align-self:flex-start;margin-bottom:8px;color:var(--text-3);font-size:10.5px;font-weight:800;letter-spacing:.055em}
+.matrix-cell h3{font-size:18px;line-height:1.26;letter-spacing:-.018em;margin-bottom:5px}.matrix-cell p{font-size:12.5px;line-height:1.45;color:var(--text-2)}
+.matrix-cell .matrix-limit{margin-top:auto;padding-top:10px;color:var(--danger);font-size:12px;font-weight:800;line-height:1.35}
+.matrix-cell.mix-contact{background:color-mix(in srgb,var(--surface) 76%,var(--warn-soft));border-color:color-mix(in srgb,var(--border) 75%,var(--warn))}
+.matrix-cell.majubom{background:var(--accent-soft);border-color:rgba(91,138,245,.74);box-shadow:inset 0 0 0 1px rgba(91,138,245,.12)}
+.matrix-cell.majubom .matrix-tag{color:var(--accent)}.matrix-cell.majubom p{color:#d0ddfa}.matrix-cell.majubom .matrix-limit{color:var(--accent);font-size:13px}
+.matrix-x{display:flex;justify-content:space-between;padding:10px 6px 0;color:var(--text-3);font-size:11px;font-weight:800;letter-spacing:.02em}.matrix-x span:last-child{color:var(--accent)}
+.matrix-footnote{margin-top:13px;padding-top:11px;border-top:1px solid var(--border);font-size:11.5px;line-height:1.5;color:var(--text-3)}.matrix-footnote b{color:var(--text-2)}
+
+/* 기존 방식 → 마주봄: 두 가지 현장 문제를 행별로 비교 */
+.compare-heads,.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 36px}
+.compare-heads{margin:24px 0 12px;font-size:24px;font-weight:900}
+.compare-heads span{padding-left:26px}.compare-heads span:last-child{color:#a9c3ff}
+.compare-cell{position:relative;padding:28px 30px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
+.compare-cell.ours{background:#19243a;border-color:#354c70}
+.compare-cell.ours::before{content:'→';position:absolute;left:-29px;top:50%;transform:translateY(-50%);font-size:25px;color:#a9c3ff}
+.compare-label{font-size:17px;font-weight:700;color:#c5cad5;margin-bottom:16px}
+.ours .compare-label{color:#a9c3ff}
+.compare-cell h3{font-size:32px;line-height:1.28;letter-spacing:-.025em;margin-bottom:16px}
+.compare-cell p{font-size:19px;line-height:1.5;color:#ccd0da}
+.compare-cell .compare-example{font-size:16px;color:#b3bac9;margin-top:15px}
+.compare-example a{color:inherit;text-underline-offset:3px}
+.compare-cell .compare-usage{font-size:17px;font-weight:700;color:#d6deed;margin:0 0 9px}
+.compare-cell .compare-usage a{color:inherit;text-underline-offset:3px}
+.compare-cell .compare-caution{font-size:17px;color:#f4a9b5;font-weight:700;margin-top:12px}
+.compare-note{font-size:13px;line-height:1.5;color:#b3bac9;margin-top:14px}
+.compare-note a{color:inherit}
+.compare-list{margin:0;padding-left:23px;display:grid;gap:10px;color:#d6deed;font-size:19px;line-height:1.4}
+.compare-list li::marker{color:#a9c3ff}
+@media(max-height:760px){.compare-cell{padding:22px 26px}.compare-cell h3{font-size:30px;margin-bottom:13px}.compare-cell p{font-size:19px;line-height:1.5}.compare-heads{margin-top:16px}.compare-grid{row-gap:18px}}
+@media(max-width:800px){.slide[data-slide="2"]{justify-content:flex-start;overflow-y:auto;padding-bottom:70px}.compare-grid,.compare-heads{gap:12px}.compare-cell{padding:16px}.compare-cell h3{font-size:22px}.compare-cell p,.compare-label{font-size:16px}.compare-cell.ours::before{display:none}}
 
 /* ── 슬라이드 3: 센서 & 인식 대상 ── */
 .sensor-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:stretch}
@@ -99,10 +121,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 /* ── 슬라이드 6: 시스템 구성도 ── */
 .sysflow{display:flex;align-items:stretch;gap:8px;margin:10px 0}
-.sysflow-step{flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 12px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:220px}
-.sysflow-step .sf-photo{width:100%;height:96px;object-fit:cover;border-radius:9px;border:1px solid var(--border);margin-bottom:12px;cursor:zoom-in}
-.sysflow-step .sf-photo-pair{display:flex;gap:5px;width:100%;height:96px;margin-bottom:12px}
-.sysflow-step .sf-photo-pair img{flex:1;width:50%;height:96px;object-fit:cover;border-radius:9px;border:1px solid var(--border);cursor:zoom-in}
+.sysflow-step{flex:1 1 0;min-width:0;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 12px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:220px}
+.sysflow-step .sf-photo{width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;background:var(--bg);border-radius:9px;border:1px solid var(--border);margin-bottom:12px;cursor:zoom-in}
+.sysflow-step .sf-photo-pair{display:flex;gap:4px;width:100%;aspect-ratio:16/10;margin-bottom:12px;background:var(--bg);border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.sysflow-step .sf-photo-pair img{flex:1;min-width:0;width:50%;height:100%;object-fit:contain;cursor:zoom-in}
 .sysflow-step .sf-title{font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:6px}
 .sysflow-step .sf-desc{font-size:12px;color:var(--text-3);line-height:1.5}
 .sysflow-arrow{align-self:center;color:var(--text-3);font-size:20px;flex:0 0 auto}
@@ -122,10 +144,20 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .spec-item.emph .si-title{font-size:20px;font-weight:900;color:var(--accent)}
 .spec-item .si-sub{font-size:13px;color:var(--text-3);margin-top:3px;line-height:1.5}
 .spec-card-wide{display:flex;gap:32px;align-items:flex-start;padding:34px}
-.spec-photo-lg{width:280px;height:340px;object-fit:cover;border-radius:14px;flex:0 0 auto;border:1px solid var(--border);cursor:zoom-in}
+.spec-photo-lg{display:block;width:360px;height:270px;aspect-ratio:4/3;object-fit:cover;object-position:center;background:var(--bg);border-radius:14px;flex:0 0 auto;border:1px solid var(--border);cursor:zoom-in}
+.spec-photo-lg[src^="tof_photo"]{object-position:50% 70%}
+.spec-photo-lg[src^="pi_photo"]{object-position:50% 48%}
+.spec-photo-lg[src^="algo_photo"]{object-position:50% 55%}
+.spec-photo-lg[src^="dashboard_photo"]{object-position:52% 50%}
 .spec-body{flex:1;min-width:0}
+/* 알고리즘(8번)의 상단 라벨 공간을 대시보드(9번)에도 확보 */
+@media(min-width:1001px){
+  .slide[data-slide="4-1"] .slide-inner{height:444px;padding-top:41px}
+}
 .spec-sensor-name{font-size:15px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
-.layout-photo-full{max-width:100%;max-height:72vh;border-radius:16px;border:1px solid var(--border);cursor:zoom-in}
+.slide.placement-slide{padding:24px 76px 64px}
+.placement-slide .slide-inner{max-width:1180px;text-align:center}
+.layout-photo-full{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 88px);margin:0 auto;border-radius:12px;border:1px solid var(--border);cursor:zoom-in}
 .risk-bar{display:flex;gap:5px;margin-top:14px;height:14px}
 .risk-seg{flex:1;border-radius:7px}
 .risk-labels{display:flex;gap:5px;margin-top:10px}
@@ -137,6 +169,13 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 /* ── 영상 ── */
 .video-box{position:relative;text-align:center}
+.slide.demo-slide{padding:48px 76px 64px}
+.demo-slide .slide-inner{max-width:1180px;width:100%;display:flex;flex-direction:column;gap:24px}
+.demo-heading{display:flex;align-items:baseline;justify-content:space-between;gap:24px}
+.demo-heading .s-title{font-size:38px;margin:0}
+.demo-heading p{font-size:13px;color:var(--text-2)}
+.demo-slide .video-box{min-height:0}
+.demo-frame{display:block;width:100%;height:auto;aspect-ratio:2.45;max-height:calc(100vh - 200px);border:0;background:var(--bg)}
 .video-box video{display:block;margin:0 auto;max-width:100%;max-height:60vh;border-radius:14px;border:1px solid var(--border);background:#000}
 .video-cap{margin-top:12px;font-size:14px;color:var(--text-3)}
 .video-cap b{color:var(--text-2)}
@@ -154,13 +193,12 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 @media (max-width:1000px){
   .slide{padding:28px 18px}.s-title{font-size:28px}
-  .sensor-layout,.algo-grid,.notify-row,.competitor-row{grid-template-columns:1fr}
-  .fix-row{grid-template-columns:1fr;gap:8px}
-  .fix-arrow{transform:rotate(90deg);justify-self:center}
+  .sensor-layout,.algo-grid,.notify-row{grid-template-columns:1fr}
+  .matrix-wrap{grid-template-columns:1fr}.matrix-y{display:none}.matrix-board{min-height:240px}
   .sysflow{flex-direction:column}
   .sysflow-arrow{transform:rotate(90deg)}
   .spec-card-wide{flex-direction:column}
-  .spec-photo-lg{width:100%;height:200px}
+  .spec-photo-lg{width:min(100%,360px);height:auto;aspect-ratio:4/3;align-self:center}
 }
 </style>
 </head>
@@ -175,11 +213,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   <div class="slide-inner" style="text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:calc(100vh - 110px)">
     <div class="s-eyebrow" style="font-size:16px;padding:7px 18px">마주봄</div>
     <h1 style="font-size:44px;font-weight:900;letter-spacing:-.02em;line-height:1.35;margin:0 auto 16px">
-      AI <span class="hl-accent">비접촉</span> <span class="hl-accent">센서융합</span> 기반<br>
-      치매환자 낙상<span class="hl-accent">예측</span>시스템
+      <span class="hl-accent">비접촉 다중센서</span>를 활용한<br>
+      치매환자 낙상 감지 및 <span class="hl-accent">예측</span>시스템
     </h1>
     <p style="font-size:22px;font-weight:600;color:var(--text-2);margin-bottom:36px">
-      치매 어르신의 낙상, 넘어지기 <b style="color:var(--text-1)">전에</b> 압니다.
+      치매 어르신의 낙상, 넘어지기 <b style="color:var(--text-1)">전에</b> 알립니다.
     </p>
     <div style="display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px 30px">
       <span style="font-size:48px;font-weight:900;letter-spacing:-.03em;color:var(--danger);line-height:1">10명 중 4명</span>
@@ -188,60 +226,34 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   </div>
 </div>
 
-<!-- ═══ 2 · 문제 → 개선 ═══ -->
+<!-- ═══ 2 · 기존 방식과의 차이 ═══ -->
 <div class="slide" data-slide="2">
   <div class="slide-inner">
-    <div class="s-eyebrow">기존 방식의 한계 → 마주봄의 개선</div>
-    <h2 class="s-title">두 가지 문제를, 두 가지로 풉니다</h2>
-
-    <div class="fix-row">
-      <div class="fix-card">
-        <div class="fix-label">접촉식 (웨어러블 등)</div>
-        <div class="fix-problem">착용 문제</div>
-        <div class="fix-desc">치매 어르신이 낯선 것을 벗어버립니다</div>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-solution">
-        <div class="fix-label">마주봄</div>
-        <div class="fix-headline">① 완전 비접촉</div>
-      </div>
+    <h2 class="s-title">착용 부담 없이, <span class="hl-accent">걸음과 자세를 함께</span></h2>
+    <div class="compare-heads"><span>기존 방식의 한계</span><span>현재 방식</span></div>
+    <div class="compare-grid">
+      <article class="compare-cell">
+        <div class="compare-label">접촉식 · CarePredict Tempo</div>
+        <h3>벗으면 관찰도 중단</h3>
+        <p>손목밴드로 식사·활동 패턴 확인<br>지속적인 착용 필요</p>
+      </article>
+      <article class="compare-cell ours">
+        <div class="compare-label">비접촉식</div>
+        <h3>어르신의 일상 그대로</h3>
+        <p>착용·조작 불필요<br>평소 행동과 생활 습관 유지</p>
+      </article>
+      <article class="compare-cell">
+        <div class="compare-label">단일 감지 방식 · VirtuSense VSTAlert</div>
+        <h3>침상 이탈 움직임에 알림</h3>
+        <p>적외선으로 이탈 의도 감지<br>담당 간호사에게 사전 알림</p>
+      </article>
+      <article class="compare-cell ours">
+        <div class="compare-label">다중센서 방식</div>
+        <h3>보행 상태와 이탈 움직임을 함께 판단</h3>
+        <p>평소 대비 보행 변화 확인<br>침상 이탈 움직임과 연계</p>
+      </article>
     </div>
-
-    <div class="fix-row">
-      <div class="fix-card">
-        <div class="fix-label">단일 센서</div>
-        <div class="fix-problem">예측 정확도 저하</div>
-        <div class="fix-desc">한 가지 신호만으로는 오탐·누락이 잦습니다</div>
-      </div>
-      <div class="fix-arrow">→</div>
-      <div class="fix-solution">
-        <div class="fix-label">마주봄</div>
-        <div class="fix-headline">② 다중 센서 융합</div>
-      </div>
-    </div>
-
-    <div class="competitor-row">
-      <div class="comp-card">
-        <div class="comp-when">넘어진 뒤</div>
-        <div class="comp-name">레이더 감지기<span>Vayyar · Milesight · HiFCare</span></div>
-        <div class="comp-note">감지 92.5~99% — 잘 잡지만 사후</div>
-      </div>
-      <div class="comp-card">
-        <div class="comp-when">나온 뒤</div>
-        <div class="comp-name">압력 매트<span>침대 · 바닥 센서</span></div>
-        <div class="comp-note">밟아야 울리는 사후 감지</div>
-      </div>
-      <div class="comp-card">
-        <div class="comp-when">30~65초 전</div>
-        <div class="comp-name">VSTAlert<span>적외선 + AI</span></div>
-        <div class="comp-note">가장 빠르지만 이탈 직전만</div>
-      </div>
-      <div class="comp-card">
-        <div class="comp-when">착용 필수</div>
-        <div class="comp-name">CarePredict<span>손목 밴드</span></div>
-        <div class="comp-note">치매 어르신은 벗어버림</div>
-      </div>
-    </div>
+    <p class="compare-note">출처 · <a href="https://www.analog.com/en/signals/articles/carepredict.html" target="_blank" rel="noopener noreferrer">CarePredict 사용 방식</a> · <a href="https://leadingage.org/sites/default/files/Case%20Study_VSTAlert_FINAL%5B2%5D.pdf" target="_blank" rel="noopener noreferrer">VSTAlert 현장 운영 보고서</a></p>
   </div>
 </div>
 
@@ -289,9 +301,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   </div>
 </div>
 
-<!-- ═══ 3-0 · 병실 센서 배치도 (사진만) ═══ -->
-<div class="slide" data-slide="3-0">
-  <div class="slide-inner" style="max-width:900px;text-align:center">
+<!-- ═══ 3-0 · 병실 센서 배치도 ═══ -->
+<div class="slide placement-slide" data-slide="3-0">
+  <div class="slide-inner">
     <img src="sensor3d.png?v=3" alt="병실 센서 배치도" class="layout-photo-full zoomable" onclick="openLB(0)">
   </div>
 </div>
@@ -377,7 +389,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
       <div class="spec-body">
         <h3 class="spec-sensor-name">분류 방식</h3>
         <span class="spec-pill">자세 · 걸음 → 개인 기준선 비교</span>
-        <div class="spec-headline">ToF·mmWave 패턴을 그 어르신의 평소와 대조(z-score)</div>
+        <div class="spec-headline">ToF·mmWave 패턴을<br>그 어르신의 평소와 대조 (z-score)</div>
         <div class="spec-sub">사람마다 평소가 달라 절대 기준은 오탐이 많음 — 개인 평소 대비 이상치로 판단</div>
         <span class="spec-pill ok" style="margin-top:20px">✓ 위험도 4단계</span>
         <div class="risk-bar">
@@ -450,22 +462,15 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 </div>
 
 <!-- ═══ 7 · 시연영상 ═══ -->
-<div class="slide" data-slide="7">
-  <div class="slide-inner" style="max-width:1200px">
-    <div class="s-eyebrow" style="background:var(--ok-soft);color:var(--ok)">실제 동작 화면</div>
-    <h2 class="s-title" style="font-size:32px">ToF 자세 인식 · mmWave 포인트클라우드 추적</h2>
-    <p class="s-sub" style="margin-bottom:14px">눕기 → 뒤척임 → 걸터앉기 → 침상 이탈 → 보행, 실제 센서가 그대로 따라가는 걸 보여드립니다.</p>
-    <div class="video-box">
-      <video id="demoVideo" muted playsinline controls preload="auto">
-        <source src="demo.mp4" type="video/mp4">
-        <track kind="captions" srclang="ko" label="한국어 자막" src="captions.vtt" default>
-      </video>
-      <div style="display:flex;gap:10px;justify-content:center;align-items:center;margin-top:10px">
-        <button class="speed-btn" id="speedBtn" type="button">배속: 1.3x</button>
-        <div class="video-cap" style="margin-top:0"><b>Enter</b> 재생 · 무음(자막 포함)</div>
-      </div>
+<div class="slide demo-slide" data-slide="7">
+  <div class="slide-inner">
+    <div class="demo-heading">
+      <h2 class="s-title">기상부터 침대 이탈까지</h2>
+      <p>Enter 재생·일시정지 · F 전체화면</p>
     </div>
-    <p class="cue-line">🎤 "실제로 어떻게 동작하는지, 영상으로 보여드리겠습니다."</p>
+    <div class="video-box">
+      <iframe id="demoFrame" class="demo-frame" src="demo-sync/index.html?embed=1" title="현장 영상과 모니터 확대 동기화 시연" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
@@ -534,28 +539,17 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <script>
 (function(){
   var slides=document.querySelectorAll('.slide'),total=slides.length,cur=0;
-  var vid=document.getElementById('demoVideo');
-
-  vid.addEventListener('error',function(){
-    if(vid.dataset.fb) return; vid.dataset.fb='1';
-    vid.querySelector('source').src='scenario.mp4'; vid.load();
-  },true);
-
-  var SPEEDS=[1.3,1.5,1.0];
-  var speedIdx=0;
-  vid.playbackRate=SPEEDS[0];
-  var speedBtn=document.getElementById('speedBtn');
-  vid.addEventListener('loadedmetadata',function(){ vid.playbackRate=SPEEDS[speedIdx]; });
-  speedBtn.addEventListener('click',function(){
-    speedIdx=(speedIdx+1)%SPEEDS.length;
-    vid.playbackRate=SPEEDS[speedIdx];
-    speedBtn.textContent='배속: '+SPEEDS[speedIdx]+'x';
+  var vid=document.getElementById('demoFrame');
+  function demoCommand(command){vid.contentWindow.postMessage({type:'majubom-demo',command:command},location.origin);}
+  window.addEventListener('message',function(e){
+    if(e.origin!==location.origin||e.source!==vid.contentWindow||e.data.type!=='majubom-deck-key')return;
+    document.dispatchEvent(new KeyboardEvent('keydown',{key:e.data.key}));
   });
 
   function show(n){
     if(window.closeLB) closeLB();
     slides.forEach(function(s,i){s.classList.remove('active','prev');if(i===n)s.classList.add('active');else if(i<n)s.classList.add('prev');});
-    if(!slides[n].contains(vid)){vid.pause();} else {vid.currentTime=0; vid.playbackRate=SPEEDS[speedIdx];}
+    demoCommand(slides[n].contains(vid)?'reset':'pause');
     document.getElementById('counter').textContent=(n+1)+' / '+total;
     document.getElementById('prevBtn').style.opacity=n===0?'.3':'1';
     document.getElementById('nextBtn').style.opacity=n===total-1?'.3':'1';
@@ -577,7 +571,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     else if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(-1);}
     else if(k==='Home'){cur=0;show(cur);}
     else if(k==='End'){cur=total-1;show(cur);}
-    else if(k==='Enter'){ if(slides[cur].contains(vid)){ e.preventDefault(); vid.paused?vid.play().catch(function(){}):vid.pause(); } }
+    else if(k==='Enter'){ if(slides[cur].contains(vid)){ e.preventDefault(); demoCommand('toggle'); } }
     else if(k==='f'||k==='F'){ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(function(){}); }
     else if(k==='t'){ toggleTimer(); }
     else if(k==='T'){ resetTimer(); }
