@@ -2,7 +2,7 @@
 
 - UI: https://github.com/b-hyoung/Majubom/blob/main/site/index.html
 - 스타일/렌더링: site/dashboard-assets/dashboard.css, dashboard.js
-- 간호사 화면: site/tests/dashboard.spec.cjs의 installMockApi 테스트 fixture로 UI 실행. 실센서 연결/실제 환자 데이터가 아니다. UI의 LIVE 배지는 테스트 fixture가 재현하는 상태다.
+- 간호사 화면: site/tests/dashboard.spec.cjs의 installMockApi 테스트 fixture로 UI 실행. 실센서 연결/실제 환자 데이터가 아니다. 시연영상과 일치하도록 표시 이름·나이를 김순임 어르신 · 78세로 설정했으며, 발표용 캡처에서는 AI 리포트 확인 버튼과 LIVE 센서 연결 배지를 숨겼다. 센서 수치는 기존 테스트 fixture를 유지한다.
 - 리포트 화면: server/reports/2026-08-29.json의 structured_facts를 기존 리포트 모달의 현재_상태, 최근_변화, 보행_변화, 추가_관찰이_필요한_항목, 데이터_신뢰도_설명 필드에 대응시켜 표시했다.
 - 원본 JSON은 합성 데이터임을 명시하며 ai_narrative는 null이다. 따라서 AI가 실제로 생성한 리포트 또는 보호자 전용 구현 완료 화면이라는 주장은 하지 않는다.
 - 위험점수/신뢰도는 리포트 캡처에서 생성하지 않고 생략했다.
