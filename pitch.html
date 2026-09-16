@@ -99,8 +99,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 /* ── 슬라이드 6: 시스템 구성도 ── */
 .sysflow{display:flex;align-items:stretch;gap:8px;margin:10px 0}
-.sysflow-step{flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:20px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:150px}
-.sysflow-step .sf-ico{font-size:32px;line-height:1;margin-bottom:10px}
+.sysflow-step{flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 12px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;min-height:220px}
+.sysflow-step .sf-photo{width:100%;height:96px;object-fit:cover;border-radius:9px;border:1px solid var(--border);margin-bottom:12px;cursor:zoom-in}
+.sysflow-step .sf-photo-pair{display:flex;gap:5px;width:100%;height:96px;margin-bottom:12px}
+.sysflow-step .sf-photo-pair img{flex:1;width:50%;height:96px;object-fit:cover;border-radius:9px;border:1px solid var(--border);cursor:zoom-in}
 .sysflow-step .sf-title{font-size:14px;font-weight:800;color:var(--text-1);margin-bottom:6px}
 .sysflow-step .sf-desc{font-size:12px;color:var(--text-3);line-height:1.5}
 .sysflow-arrow{align-self:center;color:var(--text-3);font-size:20px;flex:0 0 auto}
@@ -119,6 +121,19 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .spec-item .si-title{font-size:17px;font-weight:700;color:var(--text-1)}
 .spec-item.emph .si-title{font-size:20px;font-weight:900;color:var(--accent)}
 .spec-item .si-sub{font-size:13px;color:var(--text-3);margin-top:3px;line-height:1.5}
+.spec-card-wide{display:flex;gap:32px;align-items:flex-start;padding:34px}
+.spec-photo-lg{width:280px;height:340px;object-fit:cover;border-radius:14px;flex:0 0 auto;border:1px solid var(--border);cursor:zoom-in}
+.spec-body{flex:1;min-width:0}
+.spec-sensor-name{font-size:15px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.layout-photo-full{max-width:100%;max-height:72vh;border-radius:16px;border:1px solid var(--border);cursor:zoom-in}
+.risk-bar{display:flex;gap:5px;margin-top:14px;height:14px}
+.risk-seg{flex:1;border-radius:7px}
+.risk-labels{display:flex;gap:5px;margin-top:10px}
+.risk-label{flex:1;text-align:center}
+.risk-label .rl-name{font-size:15px;font-weight:800}
+.risk-label.emph .rl-name{font-size:19px}
+.risk-label .rl-range{font-size:11px;color:var(--text-3);margin-top:3px;font-family:var(--font-mono, monospace)}
+.risk-label .rl-desc{font-size:12px;color:var(--text-2);margin-top:2px}
 
 /* ── 영상 ── */
 .video-box{position:relative;text-align:center}
@@ -144,6 +159,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   .fix-arrow{transform:rotate(90deg);justify-self:center}
   .sysflow{flex-direction:column}
   .sysflow-arrow{transform:rotate(90deg)}
+  .spec-card-wide{flex-direction:column}
+  .spec-photo-lg{width:100%;height:200px}
 }
 </style>
 </head>
@@ -232,36 +249,39 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 <div class="slide" data-slide="3">
   <div class="slide-inner" style="max-width:1260px">
     <div class="s-eyebrow">센싱 방식 · 시스템 구성</div>
-    <h2 class="s-title">센서 2개에서 알림까지, 한 장의 흐름</h2>
+    <h2 class="s-title">센서 2개에서 대시보드까지, 한 장의 흐름</h2>
     <div class="sysflow">
       <div class="sysflow-step">
-        <div class="sf-ico">🛏️</div>
+        <img src="sensor3d.png?v=3" alt="병실 센서 배치" class="sf-photo zoomable" onclick="openLB(0)">
         <div class="sf-title">병실</div>
         <div class="sf-desc">치매 병동<br>1인실</div>
       </div>
       <div class="sysflow-arrow">→</div>
       <div class="sysflow-step">
-        <div class="sf-ico">📡</div>
+        <div class="sf-photo-pair">
+          <img src="mmwave_photo.jpg?v=1" alt="mmWave 레이더 실물" class="zoomable" onclick="openLB(1)">
+          <img src="tof_photo.jpg?v=1" alt="ToF 센서 실물" class="zoomable" onclick="openLB(2)">
+        </div>
         <div class="sf-title">센서 2종</div>
         <div class="sf-desc">mmWave + ToF<br>비접촉 감지</div>
       </div>
       <div class="sysflow-arrow">→</div>
       <div class="sysflow-step">
-        <div class="sf-ico">🔌</div>
+        <img src="pi_photo.jpg?v=1" alt="게이트웨이(Raspberry Pi 5) 실물" class="sf-photo zoomable" onclick="openLB(4)">
         <div class="sf-title">게이트웨이</div>
         <div class="sf-desc">Pi 5<br>수신 · 동기화 · 전처리</div>
       </div>
       <div class="sysflow-arrow">→</div>
       <div class="sysflow-step">
-        <div class="sf-ico">🧠</div>
+        <img src="algo_photo.jpg?v=1" alt="위험도 인식 알고리즘 실측 데이터" class="sf-photo zoomable" onclick="openLB(3)">
         <div class="sf-title">알고리즘</div>
         <div class="sf-desc">개인 기준선<br>z-score 판정</div>
       </div>
       <div class="sysflow-arrow">→</div>
       <div class="sysflow-step">
-        <div class="sf-ico">📲</div>
-        <div class="sf-title">알림</div>
-        <div class="sf-desc">간호사 즉시<br>보호자 리포트</div>
+        <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" class="sf-photo zoomable" onclick="openLB(5)">
+        <div class="sf-title">대시보드</div>
+        <div class="sf-desc">실시간 확인<br>알림·기록</div>
       </div>
     </div>
     <p style="text-align:center;font-size:13.5px;color:var(--text-3);margin-top:12px">영상 저장 없음 · 모든 처리는 병실 안 게이트웨이에서 종료</p>
@@ -269,61 +289,80 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
   </div>
 </div>
 
-<!-- ═══ 3-1 · mmWave 측정 방식 ═══ -->
+<!-- ═══ 3-0 · 병실 센서 배치도 (사진만) ═══ -->
+<div class="slide" data-slide="3-0">
+  <div class="slide-inner" style="max-width:900px;text-align:center">
+    <img src="sensor3d.png?v=3" alt="병실 센서 배치도" class="layout-photo-full zoomable" onclick="openLB(0)">
+  </div>
+</div>
+
+<!-- ═══ 3-1 · mmWave 레이더 (측정 방식 + 감지 항목) ═══ -->
 <div class="slide" data-slide="3-1">
-  <div class="slide-inner" style="max-width:760px">
-    <div class="spec-card">
-      <img src="mmwave_photo.jpg?v=1" alt="mmWave 레이더 실물" class="spec-photo zoomable" onclick="openLB(1)">
-      <span class="spec-pill">측정 방식</span>
-      <div class="spec-headline">전파 송출 → 반사파의 도플러 · 위상 분석</div>
-      <div class="spec-sub">움직임과 미세 진동을 접촉 없이 계산</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ 3-2 · ToF 측정 방식 ═══ -->
-<div class="slide" data-slide="3-2">
-  <div class="slide-inner" style="max-width:760px">
-    <div class="spec-card">
-      <img src="tof_photo.jpg?v=1" alt="ToF 센서 실물" class="spec-photo zoomable" onclick="openLB(2)">
-      <span class="spec-pill">측정 방식</span>
-      <div class="spec-headline">적외선 발사 → 반사 도달 시간(ToF)으로 거리</div>
-      <div class="spec-sub">±1mm 정밀 · 8×8 다존으로 자세 형태까지</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ 3-3 · mmWave 감지 항목 ═══ -->
-<div class="slide" data-slide="3-3">
-  <div class="slide-inner" style="max-width:760px">
-    <div class="spec-card">
-      <img src="mmwave_photo.jpg?v=1" alt="mmWave 레이더 실물" class="spec-photo zoomable" onclick="openLB(1)">
-      <span class="spec-pill ok">✓ 감지 항목</span>
-      <div class="spec-list">
-        <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
-          <div><div class="si-title">위치 · 움직임 추적</div><div class="si-sub">x,y 좌표 실시간 추적 → 침대 위 위치로 이탈 사전 감지</div></div></div>
-        <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
-          <div><div class="si-title">보행 속도 · 변동성</div><div class="si-sub">좌표 변화량 · 걸음 간격(도플러)으로 계산</div></div></div>
-        <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
-          <div><div class="si-title">이탈 가능성 판단 — ToF 보조</div><div class="si-sub">mmWave 위치·움직임 + ToF 자세가 겹칠 때 → 이탈 가능성 높음</div></div></div>
+  <div class="slide-inner" style="max-width:1080px">
+    <div class="spec-card spec-card-wide">
+      <img src="mmwave_photo.jpg?v=1" alt="mmWave 레이더 실물" class="spec-photo-lg zoomable" onclick="openLB(1)">
+      <div class="spec-body">
+        <h3 class="spec-sensor-name">mmWave 레이더</h3>
+        <span class="spec-pill">측정 방식</span>
+        <div class="spec-headline">전파 송출 → 반사파의 도플러 · 위상 분석</div>
+        <div class="spec-sub">움직임과 미세 진동을 접촉 없이 계산</div>
+        <span class="spec-pill ok" style="margin-top:20px">✓ 감지 항목</span>
+        <div class="spec-list">
+          <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">위치 · 움직임 추적</div><div class="si-sub">x,y 좌표 실시간 추적 → 침대 위 위치로 이탈 사전 감지</div></div></div>
+          <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">보행 속도 · 변동성</div><div class="si-sub">좌표 변화량 · 걸음 간격(도플러)으로 계산</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">이탈 가능성 판단 — ToF 보조</div><div class="si-sub">mmWave 위치·움직임 + ToF 자세가 겹칠 때 → 이탈 가능성 높음</div></div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══ 3-4 · ToF 감지 항목 ═══ -->
-<div class="slide" data-slide="3-4">
-  <div class="slide-inner" style="max-width:760px">
-    <div class="spec-card">
-      <img src="tof_photo.jpg?v=1" alt="ToF 센서 실물" class="spec-photo zoomable" onclick="openLB(2)">
-      <span class="spec-pill" style="color:var(--warn)">✓ 감지 항목</span>
-      <div class="spec-list">
-        <div class="spec-item emph"><span class="spec-dot" style="background:var(--warn)"></span>
-          <div><div class="si-title">자세 형태 인식</div><div class="si-sub">8×8 거리 분포로 눕음 → 앉음 → 걸터앉음 판별</div></div></div>
-        <div class="spec-item"><span class="spec-dot" style="background:var(--warn)"></span>
-          <div><div class="si-title">침대 가장자리 접근</div><div class="si-sub">가장자리 존의 거리 변화로 감지</div></div></div>
-        <div class="spec-item"><span class="spec-dot" style="background:var(--warn)"></span>
-          <div><div class="si-title">이탈 가능성 판단 — mmWave 조합</div><div class="si-sub">ToF 자세 + mmWave 위치·움직임이 겹칠 때 → 이탈 가능성 높음</div></div></div>
+<!-- ═══ 3-2 · ToF 센서 (측정 방식 + 감지 항목) ═══ -->
+<div class="slide" data-slide="3-2">
+  <div class="slide-inner" style="max-width:1080px">
+    <div class="spec-card spec-card-wide">
+      <img src="tof_photo.jpg?v=1" alt="ToF 센서 실물" class="spec-photo-lg zoomable" onclick="openLB(2)">
+      <div class="spec-body">
+        <h3 class="spec-sensor-name">ToF 거리 센서</h3>
+        <span class="spec-pill">측정 방식</span>
+        <div class="spec-headline">적외선 발사 → 반사 도달 시간(ToF)으로 거리</div>
+        <div class="spec-sub">±1mm 정밀 · 8×8 다존으로 자세 형태까지</div>
+        <span class="spec-pill" style="margin-top:20px;color:var(--warn)">✓ 감지 항목</span>
+        <div class="spec-list">
+          <div class="spec-item emph"><span class="spec-dot" style="background:var(--warn)"></span>
+            <div><div class="si-title">자세 형태 인식</div><div class="si-sub">8×8 거리 분포로 눕음 → 앉음 → 걸터앉음 판별</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--warn)"></span>
+            <div><div class="si-title">침대 가장자리 접근</div><div class="si-sub">가장자리 존의 거리 변화로 감지</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--warn)"></span>
+            <div><div class="si-title">이탈 가능성 판단 — mmWave 조합</div><div class="si-sub">ToF 자세 + mmWave 위치·움직임이 겹칠 때 → 이탈 가능성 높음</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 3-3 · 게이트웨이(Pi 5) ═══ -->
+<div class="slide" data-slide="3-3">
+  <div class="slide-inner" style="max-width:1080px">
+    <div class="spec-card spec-card-wide">
+      <img src="pi_photo.jpg?v=1" alt="게이트웨이(Raspberry Pi 5) 실물" class="spec-photo-lg zoomable" onclick="openLB(4)">
+      <div class="spec-body">
+        <h3 class="spec-sensor-name">게이트웨이 · Raspberry Pi 5</h3>
+        <span class="spec-pill">역할</span>
+        <div class="spec-headline">센서 2종의 데이터를 병실 안에서 바로 처리</div>
+        <div class="spec-sub">ToF·mmWave 두 스트림을 한 곳에서 받아 알고리즘에 넘길 준비까지 끝냄</div>
+        <span class="spec-pill ok" style="margin-top:20px">✓ 핵심 기능</span>
+        <div class="spec-list">
+          <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">병실 안에서 1차 처리 완료</div><div class="si-sub">영상도, 원본 데이터도 밖으로 나가지 않음 — 개인정보 안전</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">두 센서 시간 동기화</div><div class="si-sub">ToF·mmWave를 같은 타임라인으로 맞춰 하나의 상황으로 해석</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">전처리(노이즈 제거)</div><div class="si-sub">알고리즘이 바로 쓸 수 있게 값을 정리해 전달</div></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -331,29 +370,53 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 <!-- ═══ 4 · 알고리즘 ═══ -->
 <div class="slide" data-slide="4">
-  <div class="slide-inner">
+  <div class="slide-inner" style="max-width:1080px">
     <div class="s-eyebrow">위험도 인식 알고리즘</div>
-    <h2 class="s-title">무엇을, 왜 그렇게 판단하는가</h2>
-    <div class="algo-grid">
-      <div class="algo-card">
-        <span class="algo-step">STEP 1</span>
-        <h3>자세 · 걸음 인식</h3>
-        <p>ToF 깊이 데이터로 자세(누움·뒤척임·걸터앉음)를, mmWave로 걸음 속도·흔들림을 분류합니다.</p>
-      </div>
-      <div class="algo-card">
-        <span class="algo-step">STEP 2</span>
-        <h3>개인 기준선 비교 (z-score)</h3>
-        <p>그 어르신의 지난 데이터로 만든 <b style="color:var(--text-1)">평소 값</b>과 지금을 비교해, 얼마나 벗어났는지 점수화합니다.</p>
+    <div class="spec-card spec-card-wide">
+      <img src="algo_photo.jpg?v=1" alt="위험도 인식 알고리즘 — 실측 특징 공간" class="spec-photo-lg zoomable" onclick="openLB(3)">
+      <div class="spec-body">
+        <h3 class="spec-sensor-name">분류 방식</h3>
+        <span class="spec-pill">자세 · 걸음 → 개인 기준선 비교</span>
+        <div class="spec-headline">ToF·mmWave 패턴을 그 어르신의 평소와 대조(z-score)</div>
+        <div class="spec-sub">사람마다 평소가 달라 절대 기준은 오탐이 많음 — 개인 평소 대비 이상치로 판단</div>
+        <span class="spec-pill ok" style="margin-top:20px">✓ 위험도 4단계</span>
+        <div class="risk-bar">
+          <span class="risk-seg" style="background:var(--ok)"></span>
+          <span class="risk-seg" style="background:var(--warn)"></span>
+          <span class="risk-seg" style="background:#fb923c"></span>
+          <span class="risk-seg" style="background:var(--danger)"></span>
+        </div>
+        <div class="risk-labels">
+          <div class="risk-label"><div class="rl-name" style="color:var(--ok)">정상</div><div class="rl-range">z &lt; 1.5</div><div class="rl-desc">평소 범위</div></div>
+          <div class="risk-label"><div class="rl-name" style="color:var(--warn)">주의</div><div class="rl-range">1.5~3.0</div><div class="rl-desc">경과 관찰</div></div>
+          <div class="risk-label"><div class="rl-name" style="color:#fb923c">경고</div><div class="rl-range">3.0~4.5</div><div class="rl-desc">확인 권고</div></div>
+          <div class="risk-label emph"><div class="rl-name" style="color:var(--danger)">위험</div><div class="rl-range">z ≥ 4.5</div><div class="rl-desc">즉시 알림</div></div>
+        </div>
       </div>
     </div>
-    <div class="why-box">
-      <b>왜 개인 기준선인가?</b> 사람마다 평소 걸음 속도·뒤척이는 빈도가 다릅니다. 모두에게 같은 절대 기준(예: "속도 0.5m/s 이하")을 적용하면 오탐과 누락이 늘어납니다 — <b style="color:var(--text-1)">그 사람의 평소</b>와 비교해야 정확해집니다.
-    </div>
-    <div class="level-row">
-      <div class="level-pill" style="background:var(--ok-soft);color:var(--ok)">정상</div>
-      <div class="level-pill" style="background:var(--warn-soft);color:var(--warn)">주의</div>
-      <div class="level-pill" style="background:rgba(251,146,60,.15);color:#fb923c">경고</div>
-      <div class="level-pill" style="background:var(--danger-soft);color:var(--danger)">위험</div>
+  </div>
+</div>
+
+<!-- ═══ 4-1 · 대시보드 ═══ -->
+<div class="slide" data-slide="4-1">
+  <div class="slide-inner" style="max-width:1080px">
+    <div class="spec-card spec-card-wide">
+      <img src="dashboard_photo.jpg?v=1" alt="대시보드 실제 화면" class="spec-photo-lg zoomable" onclick="openLB(5)">
+      <div class="spec-body">
+        <h3 class="spec-sensor-name">대시보드</h3>
+        <span class="spec-pill">실시간 확인</span>
+        <div class="spec-headline">간호사가 보는 화면 — 위치·자세·위험도 한눈에</div>
+        <div class="spec-sub">병실 평면도 위에 실제 좌표를 그대로 띄우는 실측 화면</div>
+        <span class="spec-pill ok" style="margin-top:20px">✓ 핵심 기능</span>
+        <div class="spec-list">
+          <div class="spec-item emph"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">위험 감지 시 즉시 알림</div><div class="si-sub">4단계 판정이 경고 이상으로 바뀌는 순간 화면·폰으로 표시</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">평면도 위 실시간 위치</div><div class="si-sub">mmWave 좌표를 침대 기준 위치로 그대로 표시</div></div></div>
+          <div class="spec-item"><span class="spec-dot" style="background:var(--ok)"></span>
+            <div><div class="si-title">센서별 상태·기록 확인</div><div class="si-sub">ToF 자세·mmWave 보행 판정과 지난 기록을 한 화면에서 조회</div></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -442,9 +505,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
     {src:'sensor3d.png?v=3', cap:'센서 3D 배치 — 요양병원 단독실 (mmWave 폴 · ToF 머리맡/발치)'},
     {src:'mmwave_photo.jpg?v=1', cap:'mmWave 레이더 실물 — 위치·보행·걸음 변동성'},
     {src:'tof_photo.jpg?v=1', cap:'ToF 센서 실물 — 자세 형태·가장자리 접근'},
-    {src:'sensor_algo.png?v=1', cap:'위험도 인식 알고리즘 — 실측 특징 공간 · z-score'},
-    {src:'sensor_pi.png?v=6', cap:'게이트웨이 — Raspberry Pi 5'},
-    {src:'sensor_dashboard.png?v=1', cap:'간호사 대시보드 — 평면도·종합판정·알림'}
+    {src:'algo_photo.jpg?v=1', cap:'위험도 인식 알고리즘 — 실측 866프레임 특징 공간'},
+    {src:'pi_photo.jpg?v=1', cap:'게이트웨이 실물 — Raspberry Pi 5'},
+    {src:'dashboard_photo.jpg?v=1', cap:'대시보드 실제 화면 — 평면도·센서 상태'}
   ];
   var lb=document.getElementById('lb'), img=document.getElementById('lbImg'), cap=document.getElementById('lbCap');
   var idx=0;
@@ -463,7 +526,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 
 <nav class="nav-bar" id="nav">
   <button class="nav-btn" id="prevBtn" onclick="go(-1)">&larr; 이전</button>
-  <div class="slide-counter" id="counter">1 / 11</div>
+  <div class="slide-counter" id="counter">1 / 12</div>
   <button class="nav-btn" id="nextBtn" onclick="go(1)">다음 &rarr;</button>
   <span class="hint">F 전체화면 &middot; T 타이머 &middot; H 컨트롤 숨김 &middot; Enter 영상</span>
 </nav>
