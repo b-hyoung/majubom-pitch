@@ -166,9 +166,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,system-ui,'Mal
 .spec-photo-lg[src^="algo_photo"]{object-position:50% 55%}
 .spec-photo-lg[src^="dashboard_photo"]{object-position:52% 50%}
 .spec-body{flex:1;min-width:0}
-/* 알고리즘(8번)의 상단 라벨 공간을 대시보드(9번)에도 확보 */
+/* 8번과 9번의 라벨·카드·이미지 상단 기준선을 일치 */
 @media(min-width:1001px){
-  .slide[data-slide="4-1"] .slide-inner{height:444px;padding-top:41px}
+  .slide[data-slide="4-1"] .slide-inner{height:444px}
 }
 .spec-sensor-name{font-size:15px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
 .slide.placement-slide{padding:24px 76px 64px}
